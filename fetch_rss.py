@@ -51,7 +51,8 @@ def main():
                     existing_links.add(entry.link)
 
     entries_to_process = []
-    for entry in feed.entries.reverse():
+    feed.entries.reverse()
+    for entry in feed.entries:
         # entry.published_parsed は UTC
         published_utc = datetime.datetime(*entry.published_parsed[:6], tzinfo=pytz.utc)
         published_jst = published_utc.astimezone(jst)
