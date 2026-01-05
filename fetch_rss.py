@@ -39,22 +39,34 @@ def main():
     # target_date = now.date()
     # target_date = (now - datetime.timedelta(days=1)).date() # テスト用
 
+    existing_links = set()
+    if os.path.exists(filename):
+        with open(filename, 'r', encoding='utf-8') as f:
+            content = f.read()
+            # 記事のリンクを探す (単純なリンク抽出)
+            for entry in feed.entries:
+                if entry.link in content:
+                    existing_links.add(entry.link)
+
     entries_to_process = []
     for entry in feed.entries:
         # entry.published_parsed は UTC
         published_utc = datetime.datetime(*entry.published_parsed[:6], tzinfo=pytz.utc)
         published_jst = published_utc.astimezone(jst)
         
-        # 指定した日のものだけ抽出
-        if published_jst.date() == now.date():
+        # 指定した日のもの、かつ未追加のものだけ抽出
+        if published_jst.date() == now.date() and entry.link not in existing_links:
             entries_to_process.append(entry)
             
     if not entries_to_process:
-        print(f"No entries found for {now.date()}.")
+        print(f"No new entries found for {now.date()}.")
         return
 
-    with open(filename, 'w', encoding='utf-8') as f:
-        f.write(f"# DevelopersIO RSS Feed - {date_str}\n\n")
+    file_exists = os.path.exists(filename)
+    with open(filename, 'a', encoding='utf-8') as f:
+        if not file_exists:
+            f.write(f"# DevelopersIO RSS Feed - {date_str}\n\n")
+        
         for entry in entries_to_process:
             f.write(f"## [{entry.title}]({entry.link})\n")
             published_jst = datetime.datetime(*entry.published_parsed[:6], tzinfo=pytz.utc).astimezone(jst)
@@ -73,7 +85,10 @@ def main():
             
             f.write("---\n\n")
 
-    print(f"Generated {filename}")
+    if file_exists:
+        print(f"Appended {len(entries_to_process)} new entries to {filename}")
+    else:
+        print(f"Generated {filename} with {len(entries_to_process)} entries")
 
 if __name__ == "__main__":
     main()
