@@ -93,6 +93,21 @@ def main():
     else:
         print(f"Generated {filename} with {len(entries_to_process)} entries")
 
+    generate_index(output_dir)
+
+
+def generate_index(output_dir):
+    files = sorted([f for f in os.listdir(output_dir) if f.endswith('.md')], reverse=True)
+    index_filename = os.path.join(output_dir, "index.md")
+    with open(index_filename, 'w', encoding='utf-8') as f:
+        f.write("# DevelopersIO Feed Archive\n\n")
+        for file in files:
+            if file == "index.md":
+                continue
+            date_str = file.replace('.md', '')
+            f.write(f"- [{date_str}]({file})\n")
+    print(f"Generated {index_filename}")
+
 
 if __name__ == "__main__":
     main()
