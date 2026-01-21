@@ -67,14 +67,57 @@ def main():
         return
 
     file_exists = os.path.exists(filename)
-    with open(filename, 'a', encoding='utf-8') as f:
-        if not file_exists:
+    if not file_exists:
+        with open(filename, 'w', encoding='utf-8') as f:
             f.write("---\n")
             f.write(f"layout: default\n")
             f.write(f"title: DevelopersIO Feed - {date_str}\n")
+            f.write(f"last_updated: {now.strftime('%Y-%m-%d %H:%M:%S')} JST\n")
             f.write("---\n\n")
             f.write(f"# DevelopersIO RSS Feed - {date_str}\n\n")
+            f.write(f"最終更新日: {now.strftime('%Y-%m-%d %H:%M:%S')} JST\n\n")
+    else:
+        # 既存ファイルのフロントマターを更新
+        with open(filename, 'r', encoding='utf-8') as f:
+            lines = f.readlines()
+        
+        with open(filename, 'w', encoding='utf-8') as f:
+            in_front_matter = False
+            front_matter_count = 0
+            updated_last_updated = False
+            updated_body_last_updated = False
+            
+            for line in lines:
+                if line.strip() == "---":
+                    in_front_matter = not in_front_matter
+                    front_matter_count += 1
+                    f.write(line)
+                    continue
+                
+                if in_front_matter and line.startswith("last_updated:"):
+                    f.write(f"last_updated: {now.strftime('%Y-%m-%d %H:%M:%S')} JST\n")
+                    updated_last_updated = True
+                    continue
 
+                if not in_front_matter and line.startswith("最終更新日:"):
+                    f.write(f"最終更新日: {now.strftime('%Y-%m-%d %H:%M:%S')} JST\n")
+                    updated_body_last_updated = True
+                    continue
+                
+                # フロントマターの終わりに到達してもlast_updatedがなかったら追加（基本ないはずだが）
+                if front_matter_count == 2 and not updated_last_updated and not in_front_matter:
+                    # これは特殊なケース。本来は1回目のループで制御すべき
+                    pass
+
+                f.write(line)
+
+            # 最終更新日の行が見つからなかった場合（既存ファイル用）
+            if not updated_body_last_updated:
+                # # タイトルの後あたりに挿入したいが、単純に末尾に追加するか、先頭付近を再構成するか
+                # 既存ファイルへの対応は別途一括処理する方が安全
+                pass
+
+    with open(filename, 'a', encoding='utf-8') as f:
         for entry in entries_to_process:
             f.write(f"## [{entry.title}]({entry.link})\n")
             published_jst = datetime.datetime(*entry.published_parsed[:6], tzinfo=pytz.utc).astimezone(jst)
