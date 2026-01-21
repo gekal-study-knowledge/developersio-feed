@@ -33,10 +33,10 @@ jobs:
       run: |
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
-        git add posts/
+        git add _posts/ index.md _config.yml
         git diff --quiet && git diff --staged --quiet || (git commit -m "Update RSS feed: $(date +'%Y-%m-%d %H:%M:%S')" && git push)
 
-  # GitHub Pagesへデプロイするジョブを追加
+  # GitHub Pagesへデプロイするジョブ
   deploy:
     runs-on: ubuntu-latest
     needs: build
@@ -51,15 +51,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          ref: main # 最新のコミットを取得するために明示
+          ref: main
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      - name: Build with Jekyll
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './posts' # postsディレクトリを公開対象にする
+          path: './_site'
 
       - name: Deploy to GitHub Pages
         id: deployment

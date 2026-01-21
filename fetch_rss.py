@@ -32,9 +32,10 @@ def main():
 
     # 日本時間の日付でファイル名を作成
     date_str = now.strftime('%Y-%m-%d')
-    output_dir = "posts"
+    output_dir = "_posts"
     os.makedirs(output_dir, exist_ok=True)
-    filename = os.path.join(output_dir, f"{date_str}.md")
+    # Jekyllの規約に合わせて YYYY-MM-DD-title.md 形式にする
+    filename = os.path.join(output_dir, f"{date_str}-feed.md")
 
     # デバッグ用に昨日の記事も取得対象に含める（必要に応じて調整）
     # 実際には today だけで良いが、テスト時に記事がないとファイルが生成されないため
@@ -96,25 +97,6 @@ def main():
         print(f"Appended {len(entries_to_process)} new entries to {filename}")
     else:
         print(f"Generated {filename} with {len(entries_to_process)} entries")
-
-    generate_index(output_dir)
-
-
-def generate_index(output_dir):
-    files = sorted([f for f in os.listdir(output_dir) if f.endswith('.md')], reverse=True)
-    index_filename = os.path.join(output_dir, "index.md")
-    with open(index_filename, 'w', encoding='utf-8') as f:
-        f.write("---\n")
-        f.write("layout: default\n")
-        f.write("title: DevelopersIO Feed Archive\n")
-        f.write("---\n\n")
-        f.write("# DevelopersIO Feed Archive\n\n")
-        for file in files:
-            if file == "index.md":
-                continue
-            date_str = file.replace('.md', '')
-            f.write(f"- [{date_str}]({file})\n")
-    print(f"Generated {index_filename}")
 
 
 if __name__ == "__main__":
