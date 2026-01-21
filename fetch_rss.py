@@ -68,6 +68,10 @@ def main():
     file_exists = os.path.exists(filename)
     with open(filename, 'a', encoding='utf-8') as f:
         if not file_exists:
+            f.write("---\n")
+            f.write(f"layout: default\n")
+            f.write(f"title: DevelopersIO Feed - {date_str}\n")
+            f.write("---\n\n")
             f.write(f"# DevelopersIO RSS Feed - {date_str}\n\n")
 
         for entry in entries_to_process:
@@ -100,6 +104,10 @@ def generate_index(output_dir):
     files = sorted([f for f in os.listdir(output_dir) if f.endswith('.md')], reverse=True)
     index_filename = os.path.join(output_dir, "index.md")
     with open(index_filename, 'w', encoding='utf-8') as f:
+        f.write("---\n")
+        f.write("layout: default\n")
+        f.write("title: DevelopersIO Feed Archive\n")
+        f.write("---\n\n")
         f.write("# DevelopersIO Feed Archive\n\n")
         for file in files:
             if file == "index.md":

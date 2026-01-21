@@ -1,3 +1,8 @@
+---
+layout: default
+title: DevelopersIO Feed Archive
+---
+
 # DevelopersIO Feed Archive
 
 - [2026-01-21](2026-01-21.md)
