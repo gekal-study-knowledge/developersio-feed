@@ -1,4 +1,4 @@
-name: Fetch RSS and Create Markdown
+name: Fetch RSS and Update Posts
 
 on:
   schedule:
@@ -6,14 +6,14 @@ on:
     - cron: '0 * * * *'
   workflow_dispatch:
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
+permissions:
+  contents: write
 
+jobs:
+  fetch-rss:
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Set up Python
@@ -23,7 +23,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm install
           python -m pip install --upgrade pip
           pip install -r .github/scripts/requirements.txt
 
@@ -35,4 +34,9 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add _posts/
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Update RSS feed: $(date +'%Y-%m-%d %H:%M:%S')" && git push)
+          if [ -n "$(git status --porcelain _posts/)" ]; then
+            git commit -m "Update RSS feed: $(date +'%Y-%m-%d %H:%M:%S')"
+            git push
+          else
+            echo "No changes in _posts/, skipping commit."
+          fi
