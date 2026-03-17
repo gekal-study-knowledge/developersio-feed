@@ -63,8 +63,8 @@ export default function PostLayout({
         <Box sx={{ my: 4 }}>
           {/* Home Button */}
           <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
-            <Link href="/" passHref legacyBehavior>
-              <Button component="a" startIcon={<HomeIcon />} variant="outlined">
+            <Link href="/" passHref>
+              <Button component="span" startIcon={<HomeIcon />} variant="outlined">
                 Home
               </Button>
             </Link>
@@ -110,12 +110,8 @@ export default function PostLayout({
             }}
           >
             {previous ? (
-              <Link href={`/posts/${previous}`} passHref legacyBehavior>
-                <Button
-                  component="a"
-                  startIcon={<ArrowBackIcon />}
-                  variant="contained"
-                >
+              <Link href={`/posts/${previous}`} passHref>
+                <Button component="span" startIcon={<ArrowBackIcon />} variant="contained">
                   前日
                 </Button>
               </Link>
@@ -123,12 +119,8 @@ export default function PostLayout({
               <Box />
             )}
             {next ? (
-              <Link href={`/posts/${next}`} passHref legacyBehavior>
-                <Button
-                  component="a"
-                  endIcon={<ArrowForwardIcon />}
-                  variant="contained"
-                >
+              <Link href={`/posts/${next}`} passHref>
+                <Button component="span" endIcon={<ArrowForwardIcon />} variant="contained">
                   翌日
                 </Button>
               </Link>
@@ -143,9 +135,9 @@ export default function PostLayout({
       {!isBottom && (
         <>
           {previous && (
-            <Link href={`/posts/${previous}`} passHref legacyBehavior>
+            <Link href={`/posts/${previous}`} passHref>
               <Fab
-                component="a"
+                component="span"
                 color="primary"
                 aria-label="previous"
                 sx={{ position: 'fixed', bottom: 16, left: 16 }}
@@ -155,9 +147,9 @@ export default function PostLayout({
             </Link>
           )}
           {next && (
-            <Link href={`/posts/${next}`} passHref legacyBehavior>
+            <Link href={`/posts/${next}`} passHref>
               <Fab
-                component="a"
+                component="span"
                 color="primary"
                 aria-label="next"
                 sx={{ position: 'fixed', bottom: 16, right: 16 }}

@@ -9,6 +9,9 @@ import Grid from '@mui/material/Grid';
 import Link from 'next/link';
 import { getSortedPostsData } from '@/lib/posts';
 
+// サーバーコンポーネントでMUIコンポーネントにLinkコンポーネントを渡すとシリアライズエラーになるため、
+// 常時<a>タグとしてレンダリングされるように設定。Next.js Linkの機能（prefetch等）は
+// クライアントサイドナビゲーションとして動作する。
 export default function Home() {
   const allPostsData = getSortedPostsData();
 
@@ -26,8 +29,12 @@ export default function Home() {
           {allPostsData.map(({ slug, date, title }) => (
             <Grid key={slug} size={{ xs: 12, sm: 6, md: 4 }}>
               <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-                <Link href={`/posts/${slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                  <CardActionArea sx={{ flexGrow: 1 }}>
+                <Link
+                  href={`/posts/${slug}`}
+                  passHref
+                  style={{ textDecoration: 'none', color: 'inherit' }}
+                >
+                  <CardActionArea component="span" sx={{ flexGrow: 1 }}>
                     <CardContent>
                       <Typography gutterBottom variant="h5" component="div" color="primary">
                         {title}
