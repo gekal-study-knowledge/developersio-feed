@@ -10,6 +10,17 @@
     <meta name="theme-color" content="#157878">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+    <style>
+      .post-navigation {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        margin-top: 20px;
+      }
+      .post-navigation .btn {
+        margin-bottom: 0;
+      }
+    </style>
     {% include head-custom.html %}
   </head>
   <body>
@@ -22,7 +33,29 @@
     </header>
 
     <main id="content" class="main-content" role="main">
+      {% if page.url != "/" and page.url != "/index.html" %}
+      <div class="post-navigation">
+        {% if page.previous %}
+          <a href="{{ page.previous.url | relative_url }}" class="btn">&laquo; {{ page.previous.date | date: "%Y-%m-%d" }}</a>
+        {% endif %}
+        {% if page.next %}
+          <a href="{{ page.next.url | relative_url }}" class="btn">{{ page.next.date | date: "%Y-%m-%d" }} &raquo;</a>
+        {% endif %}
+      </div>
+      {% endif %}
+
       {{ content }}
+
+      {% if page.url != "/" and page.url != "/index.html" %}
+      <div class="post-navigation">
+        {% if page.previous %}
+          <a href="{{ page.previous.url | relative_url }}" class="btn">&laquo; {{ page.previous.date | date: "%Y-%m-%d" }}</a>
+        {% endif %}
+        {% if page.next %}
+          <a href="{{ page.next.url | relative_url }}" class="btn">{{ page.next.date | date: "%Y-%m-%d" }} &raquo;</a>
+        {% endif %}
+      </div>
+      {% endif %}
 
       <footer class="site-footer">
         {% if site.github.is_project_page %}
