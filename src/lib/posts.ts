@@ -47,14 +47,12 @@ export async function getPostData(slug: string): Promise<PostData> {
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const matterResult = matter(fileContents);
 
-  const processedContent = await remark()
-    .use(html)
-    .process(matterResult.content);
+  const processedContent = await remark().use(html).process(matterResult.content);
   const contentHtml = processedContent.toString();
 
   const allPosts = getSortedPostsData();
   const currentIndex = allPosts.findIndex((post) => post.slug === slug);
-  
+
   const next = currentIndex > 0 ? allPosts[currentIndex - 1].slug : null;
   const previous = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1].slug : null;
 

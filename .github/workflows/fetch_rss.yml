@@ -13,26 +13,26 @@ jobs:
       contents: write
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.x'
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
 
-    - name: Install dependencies
-      run: |
-        npm install
-        python -m pip install --upgrade pip
-        pip install -r .github/scripts/requirements.txt
+      - name: Install dependencies
+        run: |
+          npm install
+          python -m pip install --upgrade pip
+          pip install -r .github/scripts/requirements.txt
 
-    - name: Run RSS script
-      run: python .github/scripts/fetch_rss.py
+      - name: Run RSS script
+        run: python .github/scripts/fetch_rss.py
 
-    - name: Commit and push if changed
-      run: |
-        git config --local user.email "github-actions[bot]@users.noreply.github.com"
-        git config --local user.name "github-actions[bot]"
-        git add _posts/
-        git diff --quiet && git diff --staged --quiet || (git commit -m "Update RSS feed: $(date +'%Y-%m-%d %H:%M:%S')" && git push)
+      - name: Commit and push if changed
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add _posts/
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Update RSS feed: $(date +'%Y-%m-%d %H:%M:%S')" && git push)
