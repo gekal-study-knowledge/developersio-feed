@@ -5,6 +5,8 @@ import CssBaseline from '@mui/material/CssBaseline';
 import theme from '@/theme/theme';
 import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
 import NextTopLoader from 'nextjs-toploader';
+import Footer from '@/components/Footer';
+import Box from '@mui/material/Box';
 
 export default function RootLayout(props: { children: React.ReactNode }) {
   return (
@@ -16,7 +18,18 @@ export default function RootLayout(props: { children: React.ReactNode }) {
             {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
             <CssBaseline />
             <NextTopLoader color="#157878" showSpinner={false} />
-            {props.children}
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                minHeight: '100vh',
+              }}
+            >
+              <Box component="main" sx={{ flexGrow: 1 }}>
+                {props.children}
+              </Box>
+              <Footer />
+            </Box>
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>

@@ -15,7 +15,7 @@ Next.js (App Router) と Material UI (MUI) v6 を使用してモダンに構築�
 - **Framework**: Next.js 15+ (App Router)
 - **UI Library**: Material UI (MUI) v6
 - **Styling**: Emotion
-- **Content**: Markdown (_posts/)
+- **Content**: Markdown (\_posts/)
 - **Data Fetching**: Python (RSS Parser)
 - **Deployment**: GitHub Pages (via GitHub Actions)
 
