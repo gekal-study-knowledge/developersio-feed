@@ -19,6 +19,19 @@
       }
       .post-navigation .btn {
         margin-bottom: 0;
+        background-color: #157878;
+        border-color: rgba(255, 255, 255, 0.2);
+        color: #ffffff;
+        padding: 0.6rem 0.9rem;
+        font-size: 0.9rem;
+        display: inline-block;
+        text-decoration: none;
+        border-radius: 0.3rem;
+        transition: color 0.2s, background-color 0.2s, border-color 0.2s;
+      }
+      .post-navigation .btn:hover {
+        background-color: #116161;
+        border-color: rgba(255, 255, 255, 0.5);
       }
     </style>
     {% include head-custom.html %}
@@ -33,26 +46,34 @@
     </header>
 
     <main id="content" class="main-content" role="main">
-      {% if page.url != "/" and page.url != "/index.html" %}
+      {% if page.id %}
       <div class="post-navigation">
         {% if page.previous %}
           <a href="{{ page.previous.url | relative_url }}" class="btn">&laquo; {{ page.previous.date | date: "%Y-%m-%d" }}</a>
+        {% else %}
+          <span></span>
         {% endif %}
         {% if page.next %}
           <a href="{{ page.next.url | relative_url }}" class="btn">{{ page.next.date | date: "%Y-%m-%d" }} &raquo;</a>
+        {% else %}
+          <span></span>
         {% endif %}
       </div>
       {% endif %}
 
       {{ content }}
 
-      {% if page.url != "/" and page.url != "/index.html" %}
+      {% if page.id %}
       <div class="post-navigation">
         {% if page.previous %}
           <a href="{{ page.previous.url | relative_url }}" class="btn">&laquo; {{ page.previous.date | date: "%Y-%m-%d" }}</a>
+        {% else %}
+          <span></span>
         {% endif %}
         {% if page.next %}
           <a href="{{ page.next.url | relative_url }}" class="btn">{{ page.next.date | date: "%Y-%m-%d" }} &raquo;</a>
+        {% else %}
+          <span></span>
         {% endif %}
       </div>
       {% endif %}
