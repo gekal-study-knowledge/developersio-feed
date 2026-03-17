@@ -1,2 +1,15 @@
 ### IntelliJ IDEA ###
 .idea
+
+# Next.js
+.next/
+out/
+node_modules/
+package-lock.json
+
+# Environment
+.env*
+
+# OS files
+.DS_Store
+Thumbs.db
