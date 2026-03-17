@@ -6,6 +6,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardActionArea from '@mui/material/CardActionArea';
 import Grid from '@mui/material/Grid';
+import Link from 'next/link';
 import { getSortedPostsData } from '@/lib/posts';
 
 export default function Home() {
@@ -25,16 +26,18 @@ export default function Home() {
           {allPostsData.map(({ slug, date, title }) => (
             <Grid key={slug} size={{ xs: 12, sm: 6, md: 4 }}>
               <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-                <CardActionArea component="a" href={`/posts/${slug}`} sx={{ flexGrow: 1 }}>
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div" color="primary">
-                      {title}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {date}
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
+                <Link href={`/posts/${slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                  <CardActionArea sx={{ flexGrow: 1 }}>
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="div" color="primary">
+                        {title}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {date}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Link>
               </Card>
             </Grid>
           ))}

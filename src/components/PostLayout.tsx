@@ -5,6 +5,7 @@ import { AppBar, Box, Button, Container, Fab, Slide, Toolbar, Typography } from 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import HomeIcon from '@mui/icons-material/Home';
+import Link from 'next/link';
 
 interface PostLayoutProps {
   title: string;
@@ -62,9 +63,11 @@ export default function PostLayout({
         <Box sx={{ my: 4 }}>
           {/* Home Button */}
           <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
-            <Button component="a" href="/" startIcon={<HomeIcon />} variant="outlined">
-              Home
-            </Button>
+            <Link href="/" passHref legacyBehavior>
+              <Button component="a" startIcon={<HomeIcon />} variant="outlined">
+                Home
+              </Button>
+            </Link>
           </Box>
 
           <Typography variant="h3" component="h1" gutterBottom color="primary">
@@ -107,26 +110,28 @@ export default function PostLayout({
             }}
           >
             {previous ? (
-              <Button
-                component="a"
-                href={`/posts/${previous}`}
-                startIcon={<ArrowBackIcon />}
-                variant="contained"
-              >
-                前日
-              </Button>
+              <Link href={`/posts/${previous}`} passHref legacyBehavior>
+                <Button
+                  component="a"
+                  startIcon={<ArrowBackIcon />}
+                  variant="contained"
+                >
+                  前日
+                </Button>
+              </Link>
             ) : (
               <Box />
             )}
             {next ? (
-              <Button
-                component="a"
-                href={`/posts/${next}`}
-                endIcon={<ArrowForwardIcon />}
-                variant="contained"
-              >
-                翌日
-              </Button>
+              <Link href={`/posts/${next}`} passHref legacyBehavior>
+                <Button
+                  component="a"
+                  endIcon={<ArrowForwardIcon />}
+                  variant="contained"
+                >
+                  翌日
+                </Button>
+              </Link>
             ) : (
               <Box />
             )}
@@ -138,26 +143,28 @@ export default function PostLayout({
       {!isBottom && (
         <>
           {previous && (
-            <Fab
-              component="a"
-              href={`/posts/${previous}`}
-              color="primary"
-              aria-label="previous"
-              sx={{ position: 'fixed', bottom: 16, left: 16 }}
-            >
-              <ArrowBackIcon />
-            </Fab>
+            <Link href={`/posts/${previous}`} passHref legacyBehavior>
+              <Fab
+                component="a"
+                color="primary"
+                aria-label="previous"
+                sx={{ position: 'fixed', bottom: 16, left: 16 }}
+              >
+                <ArrowBackIcon />
+              </Fab>
+            </Link>
           )}
           {next && (
-            <Fab
-              component="a"
-              href={`/posts/${next}`}
-              color="primary"
-              aria-label="next"
-              sx={{ position: 'fixed', bottom: 16, right: 16 }}
-            >
-              <ArrowForwardIcon />
-            </Fab>
+            <Link href={`/posts/${next}`} passHref legacyBehavior>
+              <Fab
+                component="a"
+                color="primary"
+                aria-label="next"
+                sx={{ position: 'fixed', bottom: 16, right: 16 }}
+              >
+                <ArrowForwardIcon />
+              </Fab>
+            </Link>
           )}
         </>
       )}
