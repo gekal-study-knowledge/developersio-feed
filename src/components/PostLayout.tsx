@@ -1,7 +1,18 @@
 'use client';
 
 import * as React from 'react';
-import { AppBar, Box, Button, Container, Fab, Slide, Toolbar, Typography, Paper, IconButton } from '@mui/material';
+import {
+  AppBar,
+  Box,
+  Button,
+  Container,
+  Fab,
+  Slide,
+  Toolbar,
+  Typography,
+  Paper,
+  IconButton,
+} from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import HomeIcon from '@mui/icons-material/Home';
@@ -72,7 +83,11 @@ export default function PostLayout({
         <AppBar position="fixed" sx={{ bgcolor: 'background.paper', color: 'text.primary' }}>
           <Toolbar variant="dense" sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <Link href="/" passHref>
-              <IconButton component="span" size="medium" sx={{ color: 'text.secondary', '&:hover': { color: 'primary.main' } }}>
+              <IconButton
+                component="span"
+                size="medium"
+                sx={{ color: 'text.secondary', '&:hover': { color: 'primary.main' } }}
+              >
                 <HomeIcon fontSize="medium" />
               </IconButton>
             </Link>
@@ -93,11 +108,11 @@ export default function PostLayout({
               startIcon={<HomeIcon sx={{ fontSize: '1.5rem !important' }} />}
               variant="text"
               size="large"
-              sx={{ 
-                color: 'text.secondary', 
+              sx={{
+                color: 'text.secondary',
                 '&:hover': { color: 'primary.main' },
                 fontSize: '1.1rem',
-                fontWeight: 600
+                fontWeight: 600,
               }}
             >
               Back to Archive
@@ -165,7 +180,13 @@ export default function PostLayout({
             sx={{
               mt: 4,
               mb: 8,
-              '& img': { maxWidth: '100%', height: 'auto', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', mb: 3 },
+              '& img': {
+                maxWidth: '100%',
+                height: 'auto',
+                borderRadius: '12px',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                mb: 3,
+              },
               '& h2': {
                 mt: 6,
                 mb: 3,
@@ -183,7 +204,7 @@ export default function PostLayout({
                   bgcolor: 'primary.main',
                   mr: 2,
                   borderRadius: '4px',
-                }
+                },
               },
               '& h3': {
                 mt: 4,

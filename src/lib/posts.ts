@@ -18,12 +18,6 @@ export interface PostData {
   previous?: string | null;
   next?: string | null;
 }
-
-function getPathParams(date: string, slug: string) {
-  const [year, month, day] = date.split('-');
-  return { year, month, day, slug };
-}
-
 function getAllFiles(dirPath: string, arrayOfFiles: string[] = []) {
   if (!fs.existsSync(dirPath)) {
     return arrayOfFiles;
