@@ -14,6 +14,8 @@ permissions:
 jobs:
   fetch-rss:
     runs-on: ubuntu-latest
+    outputs:
+      pushed: ${{ steps.commit_and_push.outputs.pushed }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6
