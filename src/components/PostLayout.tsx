@@ -1,10 +1,12 @@
 'use client';
 
 import * as React from 'react';
-import { AppBar, Box, Button, Container, Fab, Slide, Toolbar, Typography } from '@mui/material';
+import { AppBar, Box, Button, Container, Fab, Slide, Toolbar, Typography, Paper, IconButton } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import HomeIcon from '@mui/icons-material/Home';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import UpdateIcon from '@mui/icons-material/Update';
 import Link from 'next/link';
 
 interface PostLayoutProps {
@@ -68,49 +70,131 @@ export default function PostLayout({
       {/* Sticky Header */}
       <Slide appear={false} direction="down" in={showSticky && !isBottom}>
         <AppBar position="fixed" sx={{ bgcolor: 'background.paper', color: 'text.primary' }}>
-          <Toolbar variant="dense" sx={{ justifyContent: 'center' }}>
-            <Typography variant="h6" color="primary">
+          <Toolbar variant="dense" sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Link href="/" passHref>
+              <IconButton component="span" size="small" sx={{ color: 'text.secondary', '&:hover': { color: 'primary.main' } }}>
+                <HomeIcon />
+              </IconButton>
+            </Link>
+            <Typography variant="h6" color="primary" sx={{ flexGrow: 1, textAlign: 'center' }}>
               {date}
             </Typography>
+            <Box sx={{ width: 40 }} /> {/* balance center title */}
           </Toolbar>
         </AppBar>
       </Slide>
 
       <Container maxWidth="md">
-        <Box sx={{ my: 4 }}>
+        <Box sx={{ mt: 4, mb: 2 }}>
           {/* Home Button */}
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
-            <Link href="/" passHref>
-              <Button component="span" startIcon={<HomeIcon />} variant="outlined">
-                Home
-              </Button>
-            </Link>
-          </Box>
+          <Link href="/" passHref>
+            <Button
+              component="span"
+              startIcon={<HomeIcon />}
+              variant="text"
+              sx={{ color: 'text.secondary', '&:hover': { color: 'primary.main' } }}
+            >
+              Back to Archive
+            </Button>
+          </Link>
+        </Box>
 
-          <Typography variant="h3" component="h1" gutterBottom color="primary">
+        <Paper
+          elevation={0}
+          sx={{
+            p: { xs: 3, md: 5 },
+            mb: 4,
+            borderRadius: '16px',
+            background: (theme) =>
+              `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark || '#0d4d4d'} 100%)`,
+            color: 'common.white',
+            position: 'relative',
+            overflow: 'hidden',
+            '&::after': {
+              content: '""',
+              position: 'absolute',
+              top: -50,
+              right: -50,
+              width: 200,
+              height: 200,
+              background: 'rgba(255, 255, 255, 0.05)',
+              borderRadius: '50%',
+            },
+          }}
+        >
+          <Typography
+            variant="h3"
+            component="h1"
+            gutterBottom
+            sx={{
+              fontWeight: 800,
+              fontSize: { xs: '2rem', md: '2.75rem' },
+              lineHeight: 1.2,
+              mb: 3,
+            }}
+          >
             {title}
           </Typography>
-          <Typography variant="subtitle1" gutterBottom color="text.secondary">
-            {date} {last_updated && `(最終更新: ${last_updated})`}
-          </Typography>
 
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 3 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <CalendarMonthIcon fontSize="small" sx={{ opacity: 0.8 }} />
+              <Typography variant="subtitle1" sx={{ fontWeight: 500, opacity: 0.9 }}>
+                {date}
+              </Typography>
+            </Box>
+            {last_updated && (
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <UpdateIcon fontSize="small" sx={{ opacity: 0.8 }} />
+                <Typography variant="subtitle2" sx={{ fontWeight: 400, opacity: 0.8 }}>
+                  最終更新: {last_updated}
+                </Typography>
+              </Box>
+            )}
+          </Box>
+        </Paper>
+
+        <Box sx={{ my: 4 }}>
           <Box
             sx={{
               mt: 4,
-              mb: 6,
-              '& img': { maxWidth: '100%', height: 'auto', borderRadius: '8px' },
+              mb: 8,
+              '& img': { maxWidth: '100%', height: 'auto', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', mb: 3 },
               '& h2': {
+                mt: 6,
+                mb: 3,
+                color: 'primary.main',
+                fontSize: { xs: '1.5rem', md: '1.875rem' },
+                fontWeight: 700,
+                borderBottom: (theme) => `2px solid ${theme.palette.primary.light || '#eee'}`,
+                pb: 1,
+                display: 'flex',
+                alignItems: 'center',
+                '&::before': {
+                  content: '""',
+                  width: '8px',
+                  height: '1.5em',
+                  bgcolor: 'primary.main',
+                  mr: 2,
+                  borderRadius: '4px',
+                }
+              },
+              '& h3': {
                 mt: 4,
                 mb: 2,
-                color: 'primary.main',
-                borderBottom: '1px solid #eee',
-                pb: 1,
+                fontWeight: 600,
               },
-              '& hr': { my: 4, border: '0', borderTop: '1px solid #eee' },
+              '& p': {
+                mb: 2,
+                lineHeight: 1.8,
+              },
+              '& hr': { my: 6, border: '0', borderTop: '1px solid #eee' },
               '& a': {
                 color: 'primary.main',
+                fontWeight: 500,
                 textDecoration: 'none',
-                '&:hover': { textDecoration: 'underline' },
+                transition: 'color 0.2s',
+                '&:hover': { textDecoration: 'underline', color: 'primary.dark' },
               },
             }}
             dangerouslySetInnerHTML={{ __html: contentHtml }}
@@ -121,6 +205,7 @@ export default function PostLayout({
             sx={{
               display: 'flex',
               justifyContent: 'space-between',
+              alignItems: 'center',
               mt: 4,
               pt: 2,
               borderTop: '1px solid #eee',
@@ -135,6 +220,18 @@ export default function PostLayout({
             ) : (
               <Box />
             )}
+
+            <Link href="/" passHref>
+              <Button
+                component="span"
+                startIcon={<HomeIcon />}
+                variant="outlined"
+                sx={{ mx: 1 }}
+              >
+                Archive
+              </Button>
+            </Link>
+
             {next ? (
               <Link href={next} passHref>
                 <Button component="span" endIcon={<ArrowForwardIcon />} variant="contained">
