@@ -72,8 +72,8 @@ export default function PostLayout({
         <AppBar position="fixed" sx={{ bgcolor: 'background.paper', color: 'text.primary' }}>
           <Toolbar variant="dense" sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <Link href="/" passHref>
-              <IconButton component="span" size="small" sx={{ color: 'text.secondary', '&:hover': { color: 'primary.main' } }}>
-                <HomeIcon />
+              <IconButton component="span" size="medium" sx={{ color: 'text.secondary', '&:hover': { color: 'primary.main' } }}>
+                <HomeIcon fontSize="medium" />
               </IconButton>
             </Link>
             <Typography variant="h6" color="primary" sx={{ flexGrow: 1, textAlign: 'center' }}>
@@ -90,9 +90,15 @@ export default function PostLayout({
           <Link href="/" passHref>
             <Button
               component="span"
-              startIcon={<HomeIcon />}
+              startIcon={<HomeIcon sx={{ fontSize: '1.5rem !important' }} />}
               variant="text"
-              sx={{ color: 'text.secondary', '&:hover': { color: 'primary.main' } }}
+              size="large"
+              sx={{ 
+                color: 'text.secondary', 
+                '&:hover': { color: 'primary.main' },
+                fontSize: '1.1rem',
+                fontWeight: 600
+              }}
             >
               Back to Archive
             </Button>
@@ -226,7 +232,8 @@ export default function PostLayout({
                 component="span"
                 startIcon={<HomeIcon />}
                 variant="outlined"
-                sx={{ mx: 1 }}
+                size="large"
+                sx={{ mx: 1, fontWeight: 600 }}
               >
                 Archive
               </Button>
