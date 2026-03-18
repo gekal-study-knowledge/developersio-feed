@@ -5,10 +5,11 @@ on:
     branches:
       - main
   workflow_call:
-    branch_name:
-      description: 'The branch to checkout and process'
-      required: true
-      type: string
+    inputs:
+      branch_name:
+        description: 'The branch to checkout and process'
+        required: true
+        type: string
   workflow_dispatch:
 
 permissions:
