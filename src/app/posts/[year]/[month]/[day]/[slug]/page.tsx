@@ -24,8 +24,8 @@ export async function generateStaticParams() {
 export const dynamicParams = false;
 
 export default async function Post({ params }: PostProps) {
-  const { slug } = await params;
-  const postData = await getPostData(slug);
+  const { year, month, day, slug } = await params;
+  const postData = await getPostData(year, month, day, slug);
 
   return (
     <PostLayout

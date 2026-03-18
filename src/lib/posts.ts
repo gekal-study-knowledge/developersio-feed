@@ -48,15 +48,16 @@ export function getSortedPostsData() {
     .filter((filePath) => filePath.endsWith('.md'))
     .map((fullPath) => {
       const fileName = path.basename(fullPath);
-      const slug = fileName.replace(/\.md$/, '');
       const fileContents = fs.readFileSync(fullPath, 'utf8');
       const matterResult = matter(fileContents);
 
-      const dateMatch = fileName.match(/^(\d{4})-(\d{2})-(\d{2})/);
+      const dateMatch = fileName.match(/^(\d{4})-(\d{2})-(\d{2})-(.*)\.md$/);
       const date = dateMatch ? `${dateMatch[1]}-${dateMatch[2]}-${dateMatch[3]}` : '';
       const year = dateMatch ? dateMatch[1] : '';
       const month = dateMatch ? dateMatch[2] : '';
       const day = dateMatch ? dateMatch[3] : '';
+      const rawSlug = dateMatch ? dateMatch[4] : fileName.replace(/\.md$/, '');
+      const slug = encodeURIComponent(rawSlug);
 
       return {
         slug,
@@ -72,14 +73,21 @@ export function getSortedPostsData() {
   return allPostsData.sort((a, b) => (a.date < b.date ? 1 : -1));
 }
 
-export async function getPostData(slug: string): Promise<PostData> {
+export async function getPostData(
+  year: string,
+  month: string,
+  day: string,
+  slug: string,
+): Promise<PostData> {
   const allFiles = getAllFiles(postsDirectory);
-  const fullPath = allFiles.find(file => path.basename(file) === `${slug}.md`);
-  
+  const decodedSlug = decodeURIComponent(slug);
+  const targetFileName = `${year}-${month}-${day}-${decodedSlug}.md`;
+  const fullPath = allFiles.find((file) => path.basename(file) === targetFileName);
+
   if (!fullPath) {
-    throw new Error(`Post not found: ${slug}`);
+    throw new Error(`Post not found: ${year}/${month}/${day}/${slug}`);
   }
-  
+
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const matterResult = matter(fileContents);
 
@@ -87,19 +95,21 @@ export async function getPostData(slug: string): Promise<PostData> {
   const contentHtml = processedContent.toString();
 
   const allPosts = getSortedPostsData();
-  const currentIndex = allPosts.findIndex((post) => post.slug === slug);
+  const currentIndex = allPosts.findIndex(
+    (post) => post.year === year && post.month === month && post.day === day && post.slug === slug,
+  );
 
   const nextPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
   const previousPost = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
 
-  const next = nextPost ? `/posts/${nextPost.year}/${nextPost.month}/${nextPost.day}/${nextPost.slug}` : null;
-  const previous = previousPost ? `/posts/${previousPost.year}/${previousPost.month}/${previousPost.day}/${previousPost.slug}` : null;
+  const next = nextPost
+    ? `/posts/${nextPost.year}/${nextPost.month}/${nextPost.day}/${nextPost.slug}`
+    : null;
+  const previous = previousPost
+    ? `/posts/${previousPost.year}/${previousPost.month}/${previousPost.day}/${previousPost.slug}`
+    : null;
 
-  const dateMatch = slug.match(/^(\d{4})-(\d{2})-(\d{2})/);
-  const date = dateMatch ? `${dateMatch[1]}-${dateMatch[2]}-${dateMatch[3]}` : '';
-  const year = dateMatch ? dateMatch[1] : '';
-  const month = dateMatch ? dateMatch[2] : '';
-  const day = dateMatch ? dateMatch[3] : '';
+  const date = `${year}-${month}-${day}`;
 
   return {
     slug,
@@ -121,13 +131,18 @@ export function getAllPostSlugs() {
     .filter((filePath) => filePath.endsWith('.md'))
     .map((filePath) => {
       const fileName = path.basename(filePath);
-      const slug = fileName.replace(/\.md$/, '');
-      const dateMatch = fileName.match(/^(\d{4})-(\d{2})-(\d{2})/);
+      const dateMatch = fileName.match(/^(\d{4})-(\d{2})-(\d{2})-(.*)\.md$/);
+      const year = dateMatch ? dateMatch[1] : '';
+      const month = dateMatch ? dateMatch[2] : '';
+      const day = dateMatch ? dateMatch[3] : '';
+      const rawSlug = dateMatch ? dateMatch[4] : fileName.replace(/\.md$/, '');
+      const slug = encodeURIComponent(rawSlug);
+
       return {
         params: {
-          year: dateMatch ? dateMatch[1] : '',
-          month: dateMatch ? dateMatch[2] : '',
-          day: dateMatch ? dateMatch[3] : '',
+          year,
+          month,
+          day,
           slug,
         },
       };

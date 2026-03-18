@@ -27,7 +27,7 @@ export default function Home() {
 
         <Grid container spacing={3}>
           {allPostsData.map(({ slug, date, year, month, day, title }) => (
-            <Grid key={slug} size={{ xs: 12, sm: 6, md: 4 }}>
+            <Grid key={`${year}-${month}-${day}-${slug}`} size={{ xs: 12, sm: 6, md: 4 }}>
               <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
                 <Link
                   href={`/posts/${year}/${month}/${day}/${slug}`}
