@@ -32,7 +32,9 @@ def main():
 
     # 日本時間の日付でファイル名を作成
     date_str = now.strftime('%Y-%m-%d')
-    output_dir = "_posts"
+    year_str = now.strftime('%Y')
+    month_str = now.strftime('%m')
+    output_dir = os.path.join("_posts", year_str, month_str)
     os.makedirs(output_dir, exist_ok=True)
     # Jekyllの規約に合わせて YYYY-MM-DD-title.md 形式にする
     filename = os.path.join(output_dir, f"{date_str}-feed.md")

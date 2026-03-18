@@ -40,7 +40,7 @@ jobs:
           if [ -n "$(git status --porcelain _posts/)" ]; then
             git commit -m "Update RSS feed: $(date +'%Y-%m-%d %H:%M:%S')"
             git push
-            echo "pushed=false" >> "$GITHUB_OUTPUT"
+            echo "pushed=true" >> "$GITHUB_OUTPUT"
           else
             echo "No changes in _posts/, skipping commit."
             echo "pushed=false" >> "$GITHUB_OUTPUT"

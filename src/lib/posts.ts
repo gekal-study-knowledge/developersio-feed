@@ -16,13 +16,27 @@ export interface PostData {
   next?: string | null;
 }
 
+function getAllFiles(dirPath: string, arrayOfFiles: string[] = []) {
+  const files = fs.readdirSync(dirPath);
+
+  files.forEach((file) => {
+    if (fs.statSync(dirPath + '/' + file).isDirectory()) {
+      arrayOfFiles = getAllFiles(dirPath + '/' + file, arrayOfFiles);
+    } else {
+      arrayOfFiles.push(path.join(dirPath, file));
+    }
+  });
+
+  return arrayOfFiles;
+}
+
 export function getSortedPostsData() {
-  const fileNames = fs.readdirSync(postsDirectory);
-  const allPostsData = fileNames
-    .filter((fileName) => fileName.endsWith('.md'))
-    .map((fileName) => {
+  const allFiles = getAllFiles(postsDirectory);
+  const allPostsData = allFiles
+    .filter((filePath) => filePath.endsWith('.md'))
+    .map((fullPath) => {
+      const fileName = path.basename(fullPath);
       const slug = fileName.replace(/\.md$/, '');
-      const fullPath = path.join(postsDirectory, fileName);
       const fileContents = fs.readFileSync(fullPath, 'utf8');
       const matterResult = matter(fileContents);
 
@@ -43,7 +57,13 @@ export function getSortedPostsData() {
 }
 
 export async function getPostData(slug: string): Promise<PostData> {
-  const fullPath = path.join(postsDirectory, `${slug}.md`);
+  const allFiles = getAllFiles(postsDirectory);
+  const fullPath = allFiles.find(file => path.basename(file) === `${slug}.md`);
+  
+  if (!fullPath) {
+    throw new Error(`Post not found: ${slug}`);
+  }
+  
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const matterResult = matter(fileContents);
 
@@ -71,13 +91,13 @@ export async function getPostData(slug: string): Promise<PostData> {
 }
 
 export function getAllPostSlugs() {
-  const fileNames = fs.readdirSync(postsDirectory);
-  return fileNames
-    .filter((fileName) => fileName.endsWith('.md'))
-    .map((fileName) => {
+  const allFiles = getAllFiles(postsDirectory);
+  return allFiles
+    .filter((filePath) => filePath.endsWith('.md'))
+    .map((filePath) => {
       return {
         params: {
-          slug: fileName.replace(/\.md$/, ''),
+          slug: path.basename(filePath).replace(/\.md$/, ''),
         },
       };
     });

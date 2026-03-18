@@ -1,8 +1,6 @@
 import * as React from 'react';
-import { getPostData } from '@/lib/posts';
+import { getPostData, getAllPostSlugs } from '@/lib/posts';
 import PostLayout from '@/components/PostLayout';
-import fs from 'fs';
-import path from 'path';
 
 interface PostProps {
   params: Promise<{
@@ -11,12 +9,10 @@ interface PostProps {
 }
 
 export async function generateStaticParams() {
-  const fileNames = fs.readdirSync(path.join(process.cwd(), '_posts'));
-  return fileNames
-    .filter((fileName) => fileName.endsWith('.md'))
-    .map((fileName) => ({
-      slug: fileName.replace(/\.md$/, ''),
-    }));
+  const slugs = getAllPostSlugs();
+  return slugs.map((s) => ({
+    slug: s.params.slug,
+  }));
 }
 
 export const dynamicParams = false;
