@@ -210,44 +210,49 @@ export default function PostLayout({
           <Box
             sx={{
               display: 'flex',
-              justifyContent: 'space-between',
               alignItems: 'center',
               mt: 4,
               pt: 2,
               borderTop: '1px solid #eee',
             }}
           >
-            {previous ? (
-              <Link href={previous} passHref>
-                <Button component="span" startIcon={<ArrowBackIcon />} variant="contained">
-                  前日
+            <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-start' }}>
+              {previous ? (
+                <Link href={previous} passHref>
+                  <Button component="span" startIcon={<ArrowBackIcon />} variant="contained">
+                    前日
+                  </Button>
+                </Link>
+              ) : (
+                <Box />
+              )}
+            </Box>
+
+            <Box sx={{ flex: '0 0 auto' }}>
+              <Link href="/" passHref>
+                <Button
+                  component="span"
+                  startIcon={<HomeIcon />}
+                  variant="outlined"
+                  size="large"
+                  sx={{ mx: 1, fontWeight: 600 }}
+                >
+                  Archive
                 </Button>
               </Link>
-            ) : (
-              <Box />
-            )}
+            </Box>
 
-            <Link href="/" passHref>
-              <Button
-                component="span"
-                startIcon={<HomeIcon />}
-                variant="outlined"
-                size="large"
-                sx={{ mx: 1, fontWeight: 600 }}
-              >
-                Archive
-              </Button>
-            </Link>
-
-            {next ? (
-              <Link href={next} passHref>
-                <Button component="span" endIcon={<ArrowForwardIcon />} variant="contained">
-                  翌日
-                </Button>
-              </Link>
-            ) : (
-              <Box />
-            )}
+            <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
+              {next ? (
+                <Link href={next} passHref>
+                  <Button component="span" endIcon={<ArrowForwardIcon />} variant="contained">
+                    翌日
+                  </Button>
+                </Link>
+              ) : (
+                <Box />
+              )}
+            </Box>
           </Box>
         </Box>
       </Container>
