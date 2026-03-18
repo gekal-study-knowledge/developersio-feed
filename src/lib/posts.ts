@@ -8,6 +8,9 @@ const postsDirectory = path.join(process.cwd(), '_posts');
 
 export interface PostData {
   slug: string;
+  year: string;
+  month: string;
+  day: string;
   title: string;
   date: string;
   last_updated?: string;
@@ -16,14 +19,23 @@ export interface PostData {
   next?: string | null;
 }
 
+function getPathParams(date: string, slug: string) {
+  const [year, month, day] = date.split('-');
+  return { year, month, day, slug };
+}
+
 function getAllFiles(dirPath: string, arrayOfFiles: string[] = []) {
+  if (!fs.existsSync(dirPath)) {
+    return arrayOfFiles;
+  }
   const files = fs.readdirSync(dirPath);
 
   files.forEach((file) => {
-    if (fs.statSync(dirPath + '/' + file).isDirectory()) {
-      arrayOfFiles = getAllFiles(dirPath + '/' + file, arrayOfFiles);
+    const fullPath = path.join(dirPath, file);
+    if (fs.statSync(fullPath).isDirectory()) {
+      arrayOfFiles = getAllFiles(fullPath, arrayOfFiles);
     } else {
-      arrayOfFiles.push(path.join(dirPath, file));
+      arrayOfFiles.push(fullPath);
     }
   });
 
@@ -40,14 +52,18 @@ export function getSortedPostsData() {
       const fileContents = fs.readFileSync(fullPath, 'utf8');
       const matterResult = matter(fileContents);
 
-      // Jekyll format: 2026-03-17-feed.md
-      // We can extract the date from the filename or from the title if not present in frontmatter
-      const dateMatch = fileName.match(/^(\d{4}-\d{2}-\d{2})/);
-      const date = dateMatch ? dateMatch[1] : '';
+      const dateMatch = fileName.match(/^(\d{4})-(\d{2})-(\d{2})/);
+      const date = dateMatch ? `${dateMatch[1]}-${dateMatch[2]}-${dateMatch[3]}` : '';
+      const year = dateMatch ? dateMatch[1] : '';
+      const month = dateMatch ? dateMatch[2] : '';
+      const day = dateMatch ? dateMatch[3] : '';
 
       return {
         slug,
         date,
+        year,
+        month,
+        day,
         title: matterResult.data.title as string,
         ...matterResult.data,
       };
@@ -73,15 +89,24 @@ export async function getPostData(slug: string): Promise<PostData> {
   const allPosts = getSortedPostsData();
   const currentIndex = allPosts.findIndex((post) => post.slug === slug);
 
-  const next = currentIndex > 0 ? allPosts[currentIndex - 1].slug : null;
-  const previous = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1].slug : null;
+  const nextPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
+  const previousPost = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
 
-  const dateMatch = slug.match(/^(\d{4}-\d{2}-\d{2})/);
-  const date = dateMatch ? dateMatch[1] : '';
+  const next = nextPost ? `/posts/${nextPost.year}/${nextPost.month}/${nextPost.day}/${nextPost.slug}` : null;
+  const previous = previousPost ? `/posts/${previousPost.year}/${previousPost.month}/${previousPost.day}/${previousPost.slug}` : null;
+
+  const dateMatch = slug.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  const date = dateMatch ? `${dateMatch[1]}-${dateMatch[2]}-${dateMatch[3]}` : '';
+  const year = dateMatch ? dateMatch[1] : '';
+  const month = dateMatch ? dateMatch[2] : '';
+  const day = dateMatch ? dateMatch[3] : '';
 
   return {
     slug,
     date,
+    year,
+    month,
+    day,
     contentHtml,
     title: matterResult.data.title as string,
     previous,
@@ -95,9 +120,15 @@ export function getAllPostSlugs() {
   return allFiles
     .filter((filePath) => filePath.endsWith('.md'))
     .map((filePath) => {
+      const fileName = path.basename(filePath);
+      const slug = fileName.replace(/\.md$/, '');
+      const dateMatch = fileName.match(/^(\d{4})-(\d{2})-(\d{2})/);
       return {
         params: {
-          slug: path.basename(filePath).replace(/\.md$/, ''),
+          year: dateMatch ? dateMatch[1] : '',
+          month: dateMatch ? dateMatch[2] : '',
+          day: dateMatch ? dateMatch[3] : '',
+          slug,
         },
       };
     });

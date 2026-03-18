@@ -4,14 +4,20 @@ import PostLayout from '@/components/PostLayout';
 
 interface PostProps {
   params: Promise<{
+    year: string;
+    month: string;
+    day: string;
     slug: string;
   }>;
 }
 
 export async function generateStaticParams() {
-  const slugs = getAllPostSlugs();
-  return slugs.map((s) => ({
-    slug: s.params.slug,
+  const allPostParams = getAllPostSlugs();
+  return allPostParams.map((p) => ({
+    year: p.params.year,
+    month: p.params.month,
+    day: p.params.day,
+    slug: p.params.slug,
   }));
 }
 

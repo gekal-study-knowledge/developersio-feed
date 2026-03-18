@@ -110,7 +110,7 @@ export default function PostLayout({
             }}
           >
             {previous ? (
-              <Link href={`/posts/${previous}`} passHref>
+              <Link href={previous} passHref>
                 <Button component="span" startIcon={<ArrowBackIcon />} variant="contained">
                   前日
                 </Button>
@@ -119,7 +119,7 @@ export default function PostLayout({
               <Box />
             )}
             {next ? (
-              <Link href={`/posts/${next}`} passHref>
+              <Link href={next} passHref>
                 <Button component="span" endIcon={<ArrowForwardIcon />} variant="contained">
                   翌日
                 </Button>
@@ -135,7 +135,7 @@ export default function PostLayout({
       {!isBottom && (
         <>
           {previous && (
-            <Link href={`/posts/${previous}`} passHref>
+            <Link href={previous} passHref>
               <Fab
                 component="span"
                 color="primary"
@@ -147,7 +147,7 @@ export default function PostLayout({
             </Link>
           )}
           {next && (
-            <Link href={`/posts/${next}`} passHref>
+            <Link href={next} passHref>
               <Fab
                 component="span"
                 color="primary"

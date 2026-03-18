@@ -26,11 +26,11 @@ export default function Home() {
         </Typography>
 
         <Grid container spacing={3}>
-          {allPostsData.map(({ slug, date, title }) => (
+          {allPostsData.map(({ slug, date, year, month, day, title }) => (
             <Grid key={slug} size={{ xs: 12, sm: 6, md: 4 }}>
               <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
                 <Link
-                  href={`/posts/${slug}`}
+                  href={`/posts/${year}/${month}/${day}/${slug}`}
                   passHref
                   style={{ textDecoration: 'none', color: 'inherit' }}
                 >
