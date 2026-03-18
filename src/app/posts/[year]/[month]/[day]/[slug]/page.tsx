@@ -35,6 +35,10 @@ export default async function Post({ params }: PostProps) {
       contentHtml={postData.contentHtml}
       previous={postData.previous}
       next={postData.next}
+      year={year}
+      month={month}
+      day={day}
+      slug={slug}
     />
   );
 }

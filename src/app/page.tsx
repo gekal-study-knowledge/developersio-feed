@@ -8,6 +8,7 @@ import CardActionArea from '@mui/material/CardActionArea';
 import Grid from '@mui/material/Grid';
 import Link from 'next/link';
 import { getSortedPostsData } from '@/lib/posts';
+import VisitedIcon from '@/components/VisitedIcon';
 
 // サーバーコンポーネントでMUIコンポーネントにLinkコンポーネントを渡すとシリアライズエラーになるため、
 // 常時<a>タグとしてレンダリングされるように設定。Next.js Linkの機能（prefetch等）は
@@ -38,6 +39,7 @@ export default function Home() {
                     <CardContent>
                       <Typography gutterBottom variant="h5" component="div" color="primary">
                         {title}
+                        <VisitedIcon year={year} month={month} day={day} slug={slug} />
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
                         {date}

@@ -14,6 +14,10 @@ interface PostLayoutProps {
   contentHtml: string;
   previous?: string | null;
   next?: string | null;
+  year: string;
+  month: string;
+  day: string;
+  slug: string;
 }
 
 export default function PostLayout({
@@ -23,11 +27,24 @@ export default function PostLayout({
   contentHtml,
   previous,
   next,
+  year,
+  month,
+  day,
+  slug,
 }: PostLayoutProps) {
   const [isBottom, setIsBottom] = React.useState(false);
   const [showSticky, setShowSticky] = React.useState(false);
 
   React.useEffect(() => {
+    // 訪問済みとして保存
+    const visitedKey = 'visited_posts';
+    const visitedPosts = JSON.parse(localStorage.getItem(visitedKey) || '[]');
+    const currentPostId = `${year}/${month}/${day}/${slug}`;
+    if (!visitedPosts.includes(currentPostId)) {
+      visitedPosts.push(currentPostId);
+      localStorage.setItem(visitedKey, JSON.stringify(visitedPosts));
+    }
+
     const handleScroll = () => {
       const scrollY = window.scrollY;
       const windowHeight = window.innerHeight;
