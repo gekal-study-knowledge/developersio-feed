@@ -9,6 +9,11 @@ import Grid from '@mui/material/Grid';
 import Link from 'next/link';
 import { getSortedPostsData } from '@/lib/posts';
 import VisitedIcon from '@/components/VisitedIcon';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'DevelopersIO Feed Archive',
+};
 
 // サーバーコンポーネントでMUIコンポーネントにLinkコンポーネントを渡すとシリアライズエラーになるため、
 // 常時<a>タグとしてレンダリングされるように設定。Next.js Linkの機能（prefetch等）は

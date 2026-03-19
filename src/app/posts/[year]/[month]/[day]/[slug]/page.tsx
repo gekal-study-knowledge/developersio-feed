@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { getPostData, getAllPostSlugs } from '@/lib/posts';
 import PostLayout from '@/components/PostLayout';
+import type { Metadata } from 'next';
 
 interface PostProps {
   params: Promise<{
@@ -9,6 +10,14 @@ interface PostProps {
     day: string;
     slug: string;
   }>;
+}
+
+export async function generateMetadata({ params }: PostProps): Promise<Metadata> {
+  const { year, month, day, slug } = await params;
+  const postData = await getPostData(year, month, day, slug);
+  return {
+    title: postData.title,
+  };
 }
 
 export async function generateStaticParams() {

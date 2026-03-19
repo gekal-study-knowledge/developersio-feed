@@ -7,6 +7,15 @@ import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
 import NextTopLoader from 'nextjs-toploader';
 import Footer from '@/components/Footer';
 import Box from '@mui/material/Box';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: {
+    template: '%s | DevelopersIO Feed Archive',
+    default: 'DevelopersIO Feed Archive',
+  },
+  description: 'クラスメソッドの技術ブログ「DevelopersIO」の最新記事を日別でまとめています。',
+};
 
 export default function RootLayout(props: { children: React.ReactNode }) {
   return (
