@@ -16,7 +16,7 @@ import NavigationLinks from '@/components/organisms/NavigationLinks';
 interface PostLayoutProps {
   title: string;
   date: string;
-  last_updated?: string;
+  lastUpdated?: string;
   contentHtml: string;
   previous?: string | null;
   next?: string | null;
@@ -29,7 +29,7 @@ interface PostLayoutProps {
 export default function PostLayout({
   title,
   date,
-  last_updated,
+  lastUpdated,
   contentHtml,
   previous,
   next,
@@ -94,7 +94,7 @@ export default function PostLayout({
           </Link>
         </Box>
 
-        <PostHeader title={title} date={date} last_updated={last_updated} />
+        <PostHeader title={title} date={date} lastUpdated={lastUpdated} />
 
         {/* Decorative Divider */}
         <Box

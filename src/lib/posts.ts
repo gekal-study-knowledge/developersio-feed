@@ -3,6 +3,7 @@ import path from 'path';
 import matter from 'gray-matter';
 import { remark } from 'remark';
 import html from 'remark-html';
+import { keysToCamelCase } from '@/utils/stringUtils';
 
 const postsDirectory = path.join(process.cwd(), '_posts');
 
@@ -13,11 +14,13 @@ export interface PostData {
   day: string;
   title: string;
   date: string;
-  last_updated?: string;
+  lastUpdated?: string;
   contentHtml: string;
   previous?: string | null;
   next?: string | null;
+  [key: string]: any;
 }
+
 function getAllFiles(dirPath: string, arrayOfFiles: string[] = []) {
   if (!fs.existsSync(dirPath)) {
     return arrayOfFiles;
@@ -44,6 +47,7 @@ export function getSortedPostsData() {
       const fileName = path.basename(fullPath);
       const fileContents = fs.readFileSync(fullPath, 'utf8');
       const matterResult = matter(fileContents);
+      const data = keysToCamelCase(matterResult.data);
 
       const dateMatch = fileName.match(/^(\d{4})-(\d{2})-(\d{2})-(.*)\.md$/);
       const date = dateMatch ? `${dateMatch[1]}-${dateMatch[2]}-${dateMatch[3]}` : '';
@@ -59,8 +63,8 @@ export function getSortedPostsData() {
         year,
         month,
         day,
-        title: matterResult.data.title as string,
-        ...matterResult.data,
+        title: data.title as string,
+        ...data,
       };
     });
 
@@ -84,6 +88,7 @@ export async function getPostData(
 
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const matterResult = matter(fileContents);
+  const data = keysToCamelCase(matterResult.data);
 
   // コンテンツからヘッダーと最終更新日の行を除去
   const contentLines = matterResult.content.trim().split('\n');
@@ -134,10 +139,10 @@ export async function getPostData(
     month,
     day,
     contentHtml,
-    title: matterResult.data.title as string,
+    title: data.title as string,
     previous,
     next,
-    ...matterResult.data,
+    ...data,
   };
 }
 

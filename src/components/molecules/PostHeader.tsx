@@ -6,10 +6,10 @@ import UpdateIcon from '@mui/icons-material/Update';
 interface PostHeaderProps {
   title: string;
   date: string;
-  last_updated?: string;
+  lastUpdated?: string;
 }
 
-export default function PostHeader({ title, date, last_updated }: PostHeaderProps) {
+export default function PostHeader({ title, date, lastUpdated }: PostHeaderProps) {
   return (
     <Paper
       elevation={0}
@@ -55,11 +55,11 @@ export default function PostHeader({ title, date, last_updated }: PostHeaderProp
             {date}
           </Typography>
         </Box>
-        {last_updated && (
+        {lastUpdated && (
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <UpdateIcon fontSize="small" sx={{ opacity: 0.8 }} />
             <Typography variant="subtitle2" sx={{ fontWeight: 400, opacity: 0.8 }}>
-              最終更新: {last_updated}
+              最終更新: {lastUpdated}
             </Typography>
           </Box>
         )}
