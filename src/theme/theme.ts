@@ -3,15 +3,36 @@
 import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#157878', // Cayman theme blue-green
+  cssVariables: {
+    colorSchemeSelector: 'class',
+  },
+  colorSchemes: {
+    light: {
+      palette: {
+        primary: {
+          main: '#157878', // Cayman theme blue-green
+        },
+        secondary: {
+          main: '#f39c12', // Classmethod Orange
+        },
+        background: {
+          default: '#f4f7f6',
+        },
+      },
     },
-    secondary: {
-      main: '#f39c12', // Classmethod Orange
-    },
-    background: {
-      default: '#f4f7f6',
+    dark: {
+      palette: {
+        primary: {
+          main: '#2aa1a1', // Lighter teal for dark mode
+        },
+        secondary: {
+          main: '#f39c12',
+        },
+        background: {
+          default: '#0d1117',
+          paper: '#161b22',
+        },
+      },
     },
   },
   typography: {
@@ -30,6 +51,13 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           textTransform: 'none',
+        },
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          backgroundImage: 'none', // Disable MUI v5 dark mode elevation overlay
         },
       },
     },

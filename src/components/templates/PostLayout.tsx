@@ -4,6 +4,9 @@ import * as React from 'react';
 import { Box, Button, Container, Fab } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import Link from 'next/link';
 import StickyHeader from '@/components/organisms/StickyHeader';
 import PostHeader from '@/components/molecules/PostHeader';
@@ -140,8 +143,26 @@ export default function PostLayout({
             zIndex: 1000,
           }}
         >
+          {next && (
+            <Link href={next} passHref>
+              <Fab
+                color="primary"
+                size="medium"
+                aria-label="next day"
+                sx={{
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
+                  '&:hover': { transform: 'scale(1.1)' },
+                  transition: 'transform 0.2s',
+                }}
+              >
+                <ArrowForwardIcon />
+              </Fab>
+            </Link>
+          )}
+
           <Fab
-            color="primary"
+            color="secondary"
+            size="medium"
             aria-label="scroll to top"
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             sx={{
@@ -150,8 +171,25 @@ export default function PostLayout({
               transition: 'transform 0.2s',
             }}
           >
-            <AutoAwesomeIcon />
+            <ArrowUpwardIcon />
           </Fab>
+
+          {previous && (
+            <Link href={previous} passHref>
+              <Fab
+                color="primary"
+                size="medium"
+                aria-label="previous day"
+                sx={{
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
+                  '&:hover': { transform: 'scale(1.1)' },
+                  transition: 'transform 0.2s',
+                }}
+              >
+                <ArrowBackIcon />
+              </Fab>
+            </Link>
+          )}
         </Box>
       )}
     </>

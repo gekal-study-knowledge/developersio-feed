@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { getSortedPostsData } from '@/lib/posts';
 import PostList from '@/components/organisms/PostList';
+import ThemeSwitcher from '@/components/atoms/ThemeSwitcher';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -19,6 +20,9 @@ export default function Home() {
   return (
     <Container maxWidth="lg">
       <Box sx={{ my: 4 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <ThemeSwitcher />
+        </Box>
         <Typography variant="h2" component="h1" gutterBottom align="center" color="primary">
           DevelopersIO Feed Archive
         </Typography>

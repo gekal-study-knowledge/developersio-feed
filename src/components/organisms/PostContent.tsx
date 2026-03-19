@@ -46,7 +46,7 @@ export default function PostContent({ contentHtml }: PostContentProps) {
           mb: 2,
           lineHeight: 1.8,
         },
-        '& hr': { my: 6, border: '0', borderTop: '1px solid #eee' },
+        '& hr': { my: 6, border: '0', borderTop: '1px solid', borderColor: 'divider' },
         '& a': {
           color: 'primary.main',
           fontWeight: 500,

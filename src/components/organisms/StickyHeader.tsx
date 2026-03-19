@@ -2,6 +2,7 @@ import * as React from 'react';
 import { AppBar, Toolbar, IconButton, Typography, Box, Slide } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import Link from 'next/link';
+import ThemeSwitcher from '@/components/atoms/ThemeSwitcher';
 
 interface StickyHeaderProps {
   show: boolean;
@@ -25,7 +26,7 @@ export default function StickyHeader({ show, date }: StickyHeaderProps) {
           <Typography variant="h6" color="primary" sx={{ flexGrow: 1, textAlign: 'center' }}>
             {date}
           </Typography>
-          <Box sx={{ width: 40 }} /> {/* balance center title */}
+          <ThemeSwitcher />
         </Toolbar>
       </AppBar>
     </Slide>

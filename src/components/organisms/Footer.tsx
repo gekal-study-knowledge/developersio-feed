@@ -9,7 +9,9 @@ export default function Footer() {
         py: 6,
         px: 2,
         mt: 'auto',
-        backgroundColor: '#f5f5f5',
+        backgroundColor: 'background.paper',
+        borderTop: '1px solid',
+        borderColor: 'divider',
       }}
     >
       <Container maxWidth="lg">
