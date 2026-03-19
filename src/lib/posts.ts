@@ -85,7 +85,29 @@ export async function getPostData(
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const matterResult = matter(fileContents);
 
-  const processedContent = await remark().use(html).process(matterResult.content);
+  // コンテンツからヘッダーと最終更新日の行を除去
+  const contentLines = matterResult.content.trim().split('\n');
+  let filteredContent = matterResult.content;
+
+  if (contentLines.length > 0 && contentLines[0].startsWith('# ')) {
+    // 最初の行がH1ヘッダーの場合、それを除去
+    contentLines.shift();
+    // 次の行が「最終更新日:」で始まる場合、それも除去
+    if (
+      contentLines.length > 0 &&
+      (contentLines[0].startsWith('最終更新日:') || contentLines[0].trim() === '')
+    ) {
+      if (contentLines[0].trim() === '') {
+        contentLines.shift();
+      }
+      if (contentLines.length > 0 && contentLines[0].startsWith('最終更新日:')) {
+        contentLines.shift();
+      }
+    }
+    filteredContent = contentLines.join('\n').trim();
+  }
+
+  const processedContent = await remark().use(html).process(filteredContent);
   const contentHtml = processedContent.toString();
 
   const allPosts = getSortedPostsData();

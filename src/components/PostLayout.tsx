@@ -18,6 +18,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import HomeIcon from '@mui/icons-material/Home';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import UpdateIcon from '@mui/icons-material/Update';
+import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import Link from 'next/link';
 
 interface PostLayoutProps {
@@ -174,6 +175,34 @@ export default function PostLayout({
             )}
           </Box>
         </Paper>
+
+        {/* Decorative Divider */}
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            my: 6,
+            position: 'relative',
+            '&::before, &::after': {
+              content: '""',
+              flex: 1,
+              height: '1px',
+              background: (theme) =>
+                `linear-gradient(to ${theme.direction === 'rtl' ? 'left' : 'right'}, transparent, ${theme.palette.primary.light}, transparent)`,
+            },
+          }}
+        >
+          <AutoAwesomeIcon
+            sx={{
+              mx: 3,
+              color: 'primary.light',
+              opacity: 0.5,
+              fontSize: '1.5rem',
+              transform: 'rotate(-10deg)',
+            }}
+          />
+        </Box>
 
         <Box sx={{ my: 4 }}>
           <Box
