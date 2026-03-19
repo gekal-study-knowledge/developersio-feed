@@ -5,7 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import theme from '@/theme/theme';
 import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
 import NextTopLoader from 'nextjs-toploader';
-import Footer from '@/components/Footer';
+import Footer from '@/components/organisms/Footer';
 import Box from '@mui/material/Box';
 import type { Metadata } from 'next';
 

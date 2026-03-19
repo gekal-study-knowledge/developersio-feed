@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { getPostData, getAllPostSlugs } from '@/lib/posts';
-import PostLayout from '@/components/PostLayout';
+import PostLayout from '@/components/templates/PostLayout';
 import type { Metadata } from 'next';
 
 interface PostProps {
