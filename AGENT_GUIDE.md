@@ -5,7 +5,8 @@
 ## プロジェクトの概要
 
 このプロジェクトは、DevelopersIO の RSS フィードを日別にアーカイブする静的サイトです。
-Next.js (App Router) をベースに、MUI v6 で UI を構築しています。
+Next.js (App Router) をベースに、MUI v7 で UI を構築しています。
+Atomic Design の設計思想に基づいたコンポーネント構成を採用しています。
 
 ## 技術的制約と重要な仕様
 
@@ -42,13 +43,33 @@ Next.js (App Router) をベースに、MUI v6 で UI を構築しています。
   - `passHref` を使用する。
   - 内部の MUI コンポーネントには `component="span"` を指定し、HTML のネストルール (`<a>` の中に `<a>` を置かない) を遵守する。
 
-### 4. ワークフローの分離
+### 4. テーマとカラースキーム
+
+- MUI v7 の `colorSchemes` (CSS 変数方式) を使用しています。
+- `ThemeSwitcher` (atoms) を使用して、ライト/ダーク/システムのモードを切り替えることができます。
+- スタイル定義ではハードコードされた色の代わりに `theme.vars.palette` や `theme.palette.background.paper` などのテーマ変数を使用してください。
+
+### 5. 訪問済み記事の管理
+
+- 閲覧した記事の ID (`year/month/day/slug`) はブラウザの `localStorage` (`visited_posts` キー) に保存されます。
+- `VisitedIcon` (atoms) はこの情報を参照して、既読マークを表示します。
+
+### 6. ワークフローの分離
 
 - **`fetch_rss.yml`**: RSS 取得と `_posts/` の更新を担当 (1時間ごと)。
 - **`deploy.yml`**: `main` ブランチへのプッシュをトリガーに、ビルドとデプロイを担当。
 - これらを統合しないように注意してください。
 
 ## 開発ルール
+
+### コンポーネント設計 (Atomic Design)
+
+コンポーネントは `src/components/` 下の以下のディレクトリに分類して配置してください：
+
+- **atoms**: 最小単位（ボタン、アイコン、テーマ切り替えなど）。他のコンポーネントに依存しない。
+- **molecules**: 複数の atoms を組み合わせた、意味を持つまとまり（記事ヘッダー、カードなど）。
+- **organisms**: 複数の molecules や atoms で構成される、より複雑なセクション（記事リスト、ナビゲーション、スティッキーヘッダーなど）。
+- **templates**: ページ全体のレイアウトを定義する（PostLayout など）。
 
 ### コードスタイル
 

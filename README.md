@@ -1,19 +1,20 @@
 # DevelopersIO Feed Archive
 
 クラスメソッドの技術ブログ「DevelopersIO」の最新記事を日別で自動収集し、閲覧しやすくまとめたアーカイブサイトです。
-Next.js (App Router) と Material UI (MUI) v6 を使用してモダンに構築されています。
+Next.js (App Router) と Material UI (MUI) v7 を使用してモダンに構築されています。
 
 ## 特徴
 
 - **自動更新**: GitHub Actions により、1時間ごとに最新の RSS フィードを取得して記事データを更新します。
 - **高速な遷移**: Next.js の静的サイト生成 (SSG) とクライアントサイドナビゲーションにより、ストレスのないページ遷移を実現しています。
-- **モダンな UI**: Material UI v6 を採用し、レスポンシブで使いやすいデザインを提供します。
+- **モダンな UI**: Material UI (MUI) v7 を採用し、レスポンシブで使いやすいデザインを提供します。
+- **ダークモード対応**: システム設定に応じた自動切り替え、および手動でのライト/ダークモード切り替えに対応しています。
 - **日別アーカイブ**: 1日ごとの記事が1ページにまとまっており、前後の日へスムーズに移動できます。
 
 ## 技術スタック
 
-- **Framework**: Next.js 15+ (App Router)
-- **UI Library**: Material UI (MUI) v6
+- **Framework**: Next.js 16+ (App Router)
+- **UI Library**: Material UI (MUI) v7
 - **Styling**: Emotion
 - **Content**: Markdown (\_posts/)
 - **Data Fetching**: Python (RSS Parser)
@@ -50,9 +51,9 @@ npm run dev
 ├── _posts/             # 日別の記事データ (Markdown)
 ├── src/
 │   ├── app/            # Next.js App Router (ページ定義)
-│   ├── components/     # 共通コンポーネント
+│   ├── components/     # Atomic Design に基づくコンポーネント (atoms, molecules, organisms, templates)
 │   ├── lib/            # コンテンツ処理ロジック
-│   └── theme/          # MUI テーマ設定
+│   └── theme/          # MUI テーマ設定 (v7 colorSchemes)
 └── public/             # 静的資産
 ```
 
