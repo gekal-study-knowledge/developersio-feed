@@ -54,7 +54,13 @@ Atomic Design の設計思想に基づいたコンポーネント構成を採用
 - 閲覧した記事の ID (`year/month/day/slug`) はブラウザの `localStorage` (`visited_posts` キー) に保存されます。
 - `VisitedIcon` (atoms) はこの情報を参照して、既読マークを表示します。
 
-### 6. ワークフローの分離
+### 6. Favicon (icon.tsx)
+
+- `src/app/icon.tsx` を使用して、ビルド時に favicon を動的に生成しています。
+- MUI のプライマリカラーを使用したシンプルなデザインを採用しています。
+- 静的エクスポート (`output: 'export'`) をサポートするため、`export const dynamic = 'force-static'` が設定されています。
+
+### 7. ワークフローの分離
 
 - **`fetch_rss.yml`**: RSS 取得と `_posts/` の更新を担当 (1時間ごと)。
 - **`deploy.yml`**: `main` ブランチへのプッシュをトリガーに、ビルドとデプロイを担当。
