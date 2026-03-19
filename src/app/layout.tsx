@@ -17,7 +17,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
           <ThemeProvider theme={theme}>
             {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
             <CssBaseline />
-            <NextTopLoader color="#157878" showSpinner={false} />
+            <NextTopLoader color="#157878" showSpinner={false} height={4} showAtBottom={false} />
             <Box
               sx={{
                 display: 'flex',
