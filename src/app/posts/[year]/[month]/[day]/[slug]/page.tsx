@@ -41,7 +41,7 @@ export default async function Post({ params }: PostProps) {
       title={postData.title}
       date={postData.date}
       lastUpdated={postData.lastUpdated}
-      contentHtml={postData.contentHtml}
+      contentHtml={postData.contentHtml || ''}
       previous={postData.previous}
       next={postData.next}
       year={year}

@@ -15,7 +15,7 @@ export interface PostData {
   title: string;
   date: string;
   lastUpdated?: string;
-  contentHtml: string;
+  contentHtml?: string;
   previous?: string | null;
   next?: string | null;
   [key: string]: any;
@@ -69,6 +69,34 @@ export function getSortedPostsData() {
     });
 
   return allPostsData.sort((a, b) => (a.date < b.date ? 1 : -1));
+}
+
+export function getPostsByMonth() {
+  const allPosts = getSortedPostsData();
+  const months: { [key: string]: PostData[] } = {};
+
+  allPosts.forEach((post) => {
+    const monthKey = `${post.year}-${post.month}`;
+    if (!months[monthKey]) {
+      months[monthKey] = [];
+    }
+    months[monthKey].push(post);
+  });
+
+  return months;
+}
+
+export function getAllMonthParams() {
+  const months = getPostsByMonth();
+  return Object.keys(months).map((monthKey) => {
+    const [year, month] = monthKey.split('-');
+    return {
+      params: {
+        year,
+        month,
+      },
+    };
+  });
 }
 
 export async function getPostData(
