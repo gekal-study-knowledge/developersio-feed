@@ -36,9 +36,15 @@ export default function PostCard({
           <CardContent>
             <Typography gutterBottom variant="h5" component="div" color="primary">
               {title}
-              <VisitedIcon year={year} month={month} day={day} slug={slug} />
+              <VisitedIcon
+                year={year}
+                month={month}
+                day={day}
+                slug={slug}
+                newsCounter={newsCounter}
+              />
             </Typography>
-                      <Typography
+            <Typography
               variant="body2"
               color="text.secondary"
               sx={{
