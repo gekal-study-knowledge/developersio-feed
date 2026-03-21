@@ -12,10 +12,12 @@ import StickyHeader from '@/components/organisms/StickyHeader';
 import PostHeader from '@/components/molecules/PostHeader';
 import PostContent from '@/components/organisms/PostContent';
 import NavigationLinks from '@/components/organisms/NavigationLinks';
+import { useVisitedPost } from '@/lib/store/useVisitedPost';
 
 interface PostLayoutProps {
   title: string;
   date: string;
+  newsCounter?: number;
   lastUpdated?: string;
   contentHtml: string;
   previous?: string | null;
@@ -29,6 +31,7 @@ interface PostLayoutProps {
 export default function PostLayout({
   title,
   date,
+  newsCounter = -1,
   lastUpdated,
   contentHtml,
   previous,
@@ -41,15 +44,16 @@ export default function PostLayout({
   const [isBottom, setIsBottom] = React.useState(false);
   const [showSticky, setShowSticky] = React.useState(false);
 
+  const { markAsVisited } = useVisitedPost({
+    year,
+    month,
+    day,
+    slug,
+    newsCounter,
+  });
+
   React.useEffect(() => {
-    // 訪問済みとして保存
-    const visitedKey = 'visited_posts';
-    const visitedPosts = JSON.parse(localStorage.getItem(visitedKey) || '[]');
-    const currentPostId = `${year}/${month}/${day}/${slug}`;
-    if (!visitedPosts.includes(currentPostId)) {
-      visitedPosts.push(currentPostId);
-      localStorage.setItem(visitedKey, JSON.stringify(visitedPosts));
-    }
+    markAsVisited();
 
     const handleScroll = () => {
       const scrollY = window.scrollY;

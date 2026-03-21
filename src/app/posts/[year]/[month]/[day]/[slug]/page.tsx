@@ -40,6 +40,7 @@ export default async function Post({ params }: PostProps) {
     <PostLayout
       title={postData.title}
       date={postData.date}
+      newsCounter={postData.newsCounter}
       lastUpdated={postData.lastUpdated}
       contentHtml={postData.contentHtml || ''}
       previous={postData.previous}
