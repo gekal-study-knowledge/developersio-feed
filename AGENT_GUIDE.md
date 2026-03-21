@@ -12,7 +12,7 @@ Atomic Design の設計思想に基づいたコンポーネント構成を採用
 
 ### 1. 静的エクスポート (`output: 'export'`)
 
-- GitHub Pages でホスティングするため、`next.config.js` で `output: 'export'` が設定されています。
+- GitHub Pages でホスティングするため、`next.config.ts` で `output: 'export'` が設定されています。
 - API Routes やサーバーサイドレンダリング (SSR) は使用できません。
 - すべてのデータはビルド時に `_posts/*.md` から取得されます。
 
