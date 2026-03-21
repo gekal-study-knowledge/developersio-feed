@@ -38,7 +38,15 @@ export default function PostCard({
               {title}
               <VisitedIcon year={year} month={month} day={day} slug={slug} />
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+                      <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+            >
               <span>{date}</span>
               {newsCounter !== undefined && (
                 <Typography variant="caption" sx={{ fontWeight: 'bold', color: 'secondary.main' }}>

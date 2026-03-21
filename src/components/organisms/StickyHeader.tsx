@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { AppBar, Toolbar, IconButton, Typography, Box, Slide } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
@@ -18,7 +20,10 @@ export default function StickyHeader({ show, date }: StickyHeaderProps) {
             <IconButton
               component="span"
               size="medium"
-              sx={{ color: 'text.secondary', '&:hover': { color: 'primary.main' } }}
+              sx={{
+                color: 'text.secondary',
+                '&:hover': { color: 'primary.main' },
+              }}
             >
               <HomeIcon fontSize="medium" />
             </IconButton>

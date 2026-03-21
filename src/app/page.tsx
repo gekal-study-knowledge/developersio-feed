@@ -10,6 +10,7 @@ import Link from 'next/link';
 import { getSortedPostsData, getPostsByMonth } from '@/lib/posts';
 import PostList from '@/components/organisms/PostList';
 import ThemeSwitcher from '@/components/atoms/ThemeSwitcher';
+import UpdateNotifier from '@/components/organisms/UpdateNotifier';
 import type { Metadata } from 'next';
 import { subMonths, startOfMonth, format, isAfter, parseISO } from 'date-fns';
 
@@ -54,7 +55,15 @@ export default function Home() {
           />
         </Divider>
 
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 2, mb: 6 }}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            gap: 2,
+            mb: 6,
+          }}
+        >
           {monthKeys.map((key) => {
             const [year, month] = key.split('-');
             return (
@@ -70,6 +79,11 @@ export default function Home() {
         <Divider sx={{ mb: 4 }}>
           <Chip label="最近の記事（先月1日〜）" color="secondary" />
         </Divider>
+
+        <UpdateNotifier
+          currentLatestDate={allPostsData[0]?.date || ''}
+          currentNewsCount={allPostsData[0]?.newsCounter || 0}
+        />
 
         <PostList posts={recentPosts} />
 

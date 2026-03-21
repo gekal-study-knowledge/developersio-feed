@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { Box, Typography, Paper } from '@mui/material';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';

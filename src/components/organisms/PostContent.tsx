@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { Box } from '@mui/material';
 
@@ -8,6 +10,7 @@ interface PostContentProps {
 export default function PostContent({ contentHtml }: PostContentProps) {
   return (
     <Box
+      className="markdown-body"
       sx={{
         mt: 4,
         mb: 8,

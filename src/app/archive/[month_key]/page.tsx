@@ -76,7 +76,14 @@ export default async function MonthPage({ params }: MonthPageProps) {
   return (
     <Container maxWidth="lg">
       <Box sx={{ my: 4 }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            mb: 4,
+          }}
+        >
           <Link href="/" passHref>
             <Button
               component="span"
@@ -90,11 +97,25 @@ export default async function MonthPage({ params }: MonthPageProps) {
           <ThemeSwitcher />
         </Box>
 
-        <Typography variant="h2" component="h1" gutterBottom align="center" color="primary">
+        <Typography
+          variant="h2"
+          component="h1"
+          gutterBottom
+          align="center"
+          color="primary"
+          sx={{ fontWeight: 800, mb: 4 }}
+        >
           {year}年{month}月の記事一覧
         </Typography>
 
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 4, mt: 2 }}>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            mb: 4,
+            mt: 2,
+          }}
+        >
           {renderMonthLink(prevMonthKey, 'prev')}
           <Box sx={{ flex: 1 }} />
           {renderMonthLink(nextMonthKey, 'next')}

@@ -40,7 +40,7 @@ function getAllFiles(dirPath: string, arrayOfFiles: string[] = []) {
   return arrayOfFiles;
 }
 
-export function getSortedPostsData() {
+export function getSortedPostsData(): PostData[] {
   const allFiles = getAllFiles(postsDirectory);
   const allPostsData = allFiles
     .filter((filePath) => filePath.endsWith('.md'))
