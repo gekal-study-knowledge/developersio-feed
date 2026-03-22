@@ -97,7 +97,7 @@ def main():
     # f-stringの複数行文字列でFront Matterとヘッダーをスッキリ記述
     front_matter_and_header = f"""---
 layout: default
-title: DevelopersIO Fed - {date_str}
+title: DevelopersIO Feed - {date_str}
 news_counter: {news_counter}
 last_updated: {now_str} JST
 ---
