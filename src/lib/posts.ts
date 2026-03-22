@@ -42,7 +42,7 @@ function getAllFiles(dirPath: string, arrayOfFiles: string[] = []) {
 
 export function getSortedPostsData(): PostData[] {
   const allFiles = getAllFiles(postsDirectory);
-  const allPostsData = allFiles
+  const allPostsData: PostData[] = allFiles
     .filter((filePath) => filePath.endsWith('.md'))
     .map((fullPath) => {
       const fileName = path.basename(fullPath);
@@ -50,12 +50,12 @@ export function getSortedPostsData(): PostData[] {
       const matterResult = matter(fileContents);
       const data = keysToCamelCase(matterResult.data);
 
-      const dateMatch = fileName.match(/^(\d{4})-(\d{2})-(\d{2})-(.*)\.md$/);
+      const dateMatch = fileName.match(/^(\d{4})-(\d{2})-(\d{2})(?:-(.*))?\.md$/);
       const date = dateMatch ? `${dateMatch[1]}-${dateMatch[2]}-${dateMatch[3]}` : '';
       const year = dateMatch ? dateMatch[1] : '';
       const month = dateMatch ? dateMatch[2] : '';
       const day = dateMatch ? dateMatch[3] : '';
-      const rawSlug = dateMatch ? dateMatch[4] : fileName.replace(/\.md$/, '');
+      const rawSlug = dateMatch && dateMatch[4] ? dateMatch[4] : fileName.replace(/\.md$/, '');
       const slug = encodeURIComponent(rawSlug);
 
       return {
@@ -66,7 +66,7 @@ export function getSortedPostsData(): PostData[] {
         day,
         title: data.title as string,
         ...data,
-      };
+      } as PostData;
     });
 
   return allPostsData.sort((a, b) => (a.date < b.date ? 1 : -1));
@@ -141,7 +141,7 @@ export async function getPostData(
     filteredContent = contentLines.join('\n').trim();
   }
 
-  const processedContent = await remark().use(html).process(filteredContent);
+  const processedContent = await remark().use(html, { sanitize: true }).process(filteredContent);
   const contentHtml = processedContent.toString();
 
   const allPosts = getSortedPostsData();

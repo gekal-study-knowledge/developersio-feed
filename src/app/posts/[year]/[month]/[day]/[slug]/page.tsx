@@ -22,11 +22,11 @@ export async function generateMetadata({ params }: PostProps): Promise<Metadata>
 
 export async function generateStaticParams() {
   const allPostParams = getAllPostSlugs();
-  return allPostParams.map((p) => ({
-    year: p.params.year,
-    month: p.params.month,
-    day: p.params.day,
-    slug: p.params.slug,
+  return allPostParams.map((postParam) => ({
+    year: postParam.params.year,
+    month: postParam.params.month,
+    day: postParam.params.day,
+    slug: postParam.params.slug,
   }));
 }
 

@@ -39,7 +39,14 @@ export default function Home() {
         <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
           <ThemeSwitcher />
         </Box>
-        <Typography variant="h2" component="h1" gutterBottom align="center" color="primary">
+        <Typography
+          variant="h2"
+          component="h1"
+          gutterBottom
+          align="center"
+          color="primary"
+          sx={{ fontWeight: 800, mb: 2 }}
+        >
           DevelopersIO Feed Archive
         </Typography>
         <Typography variant="body1" gutterBottom align="center" sx={{ mb: 4 }}>
