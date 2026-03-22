@@ -90,12 +90,12 @@ GitHub Pages
 
 コンポーネントは `src/components/` 下の以下のディレクトリに分類して配置してください：
 
-| Level | Description | Examples |
-|-------|-------------|----------|
-| **atoms** | 最小単位。他のコンポーネントに依存しない | ボタン、アイコン、テーマ切り替え |
-| **molecules** | 複数の atoms を組み合わせた、意味を持つまとまり | 記事ヘッダー、カード |
+| Level         | Description                                                  | Examples                                         |
+| ------------- | ------------------------------------------------------------ | ------------------------------------------------ |
+| **atoms**     | 最小単位。他のコンポーネントに依存しない                     | ボタン、アイコン、テーマ切り替え                 |
+| **molecules** | 複数の atoms を組み合わせた、意味を持つまとまり              | 記事ヘッダー、カード                             |
 | **organisms** | 複数の molecules や atoms で構成される、より複雑なセクション | 記事リスト、ナビゲーション、スティッキーヘッダー |
-| **templates** | ページ全体のレイアウトを定義する | PostLayout |
+| **templates** | ページ全体のレイアウトを定義する                             | PostLayout                                       |
 
 ### コードスタイル
 
@@ -118,34 +118,34 @@ GitHub Pages
 
 ### Atoms
 
-| Component | Description |
-|-----------|-------------|
+| Component       | Description                            |
+| --------------- | -------------------------------------- |
 | `ThemeSwitcher` | ライト/ダーク/システムモードの切り替え |
-| `NavButton` | ナビゲーションボタン |
-| `VisitedIcon` | 既読記事を示すアイコン |
+| `NavButton`     | ナビゲーションボタン                   |
+| `VisitedIcon`   | 既読記事を示すアイコン                 |
 
 ### Molecules
 
-| Component | Description |
-|-----------|-------------|
+| Component    | Description                        |
+| ------------ | ---------------------------------- |
 | `PostHeader` | 記事のヘッダー（タイトル、日時等） |
-| `PostCard` | 記事カード |
+| `PostCard`   | 記事カード                         |
 
 ### Organisms
 
-| Component | Description |
-|-----------|-------------|
-| `PostList` | 記事リスト |
-| `StickyHeader` | 固定ヘッダー |
+| Component         | Description                |
+| ----------------- | -------------------------- |
+| `PostList`        | 記事リスト                 |
+| `StickyHeader`    | 固定ヘッダー               |
 | `NavigationLinks` | 前後記事へのナビゲーション |
-| `PostContent` | 記事本文（Markdown 表示） |
-| `UpdateNotifier` | 更新通知 |
-| `Footer` | フッター |
+| `PostContent`     | 記事本文（Markdown 表示）  |
+| `UpdateNotifier`  | 更新通知                   |
+| `Footer`          | フッター                   |
 
 ### Templates
 
-| Component | Description |
-|-----------|-------------|
+| Component    | Description            |
+| ------------ | ---------------------- |
 | `PostLayout` | 記事ページのレイアウト |
 
 ## テストと検証

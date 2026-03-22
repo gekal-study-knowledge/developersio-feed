@@ -77,11 +77,11 @@ export default function UpdateNotifier({
           }
           sx={{
             mb: 2,
-            bgcolor: (theme) => (theme.palette.mode === 'light' ? '#ff9900' : '#ff9900'),
-            color: '#232f3e',
+            bgcolor: 'secondary.main',
+            color: 'common.white',
             fontWeight: 'bold',
             '& .MuiAlert-icon': {
-              color: '#232f3e',
+              color: 'common.white',
             },
           }}
         >

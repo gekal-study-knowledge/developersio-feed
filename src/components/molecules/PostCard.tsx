@@ -38,8 +38,8 @@ export default function PostCard({
           transform: 'translateY(-4px)',
           boxShadow: (theme) =>
             theme.palette.mode === 'light'
-              ? '0 8px 16px rgba(0,0,0,0.1)'
-              : '0 8px 16px rgba(0,0,0,0.4)',
+              ? '0 8px 16px rgba(21, 120, 120, 0.2)'
+              : '0 8px 16px rgba(42, 161, 161, 0.3)',
         },
       }}
     >

@@ -20,9 +20,7 @@ export default function PostHeader({ title, date, lastUpdated }: PostHeaderProps
         mb: 4,
         borderRadius: '16px',
         background: (theme) =>
-          theme.palette.mode === 'light'
-            ? `linear-gradient(135deg, #232f3e 0%, #1a242f 100%)`
-            : `linear-gradient(135deg, #1e2b3e 0%, #151e2b 100%)`,
+          `linear-gradient(135deg, ${theme.palette.primary.dark} 0%, ${theme.palette.primary.main} 100%)`,
         color: 'common.white',
         position: 'relative',
         overflow: 'hidden',

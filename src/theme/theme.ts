@@ -11,12 +11,17 @@ const theme = createTheme({
       palette: {
         primary: {
           main: '#157878', // Cayman theme blue-green
+          light: '#2aa1a1',
+          dark: '#0d5a5a',
         },
         secondary: {
           main: '#f39c12', // Classmethod Orange
+          light: '#ffb142',
+          dark: '#d68910',
         },
         background: {
           default: '#f4f7f6',
+          paper: '#ffffff',
         },
       },
     },
@@ -24,9 +29,13 @@ const theme = createTheme({
       palette: {
         primary: {
           main: '#2aa1a1', // Lighter teal for dark mode
+          light: '#4dbfbf',
+          dark: '#157878',
         },
         secondary: {
           main: '#f39c12',
+          light: '#ffb142',
+          dark: '#d68910',
         },
         background: {
           default: '#0d1117',
@@ -36,7 +45,7 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: '"Open Sans", "Roboto", "Helvetica", "Arial", sans-serif',
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
     h1: {
       fontSize: '2.5rem',
       fontWeight: 700,
