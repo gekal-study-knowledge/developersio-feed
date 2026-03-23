@@ -1,5 +1,7 @@
+'use client';
+
 import * as React from 'react';
-import { Button } from '@mui/material';
+import Button from '@mui/material/Button';
 import Link from 'next/link';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -24,9 +26,15 @@ export default function NavButton({ href, direction }: NavButtonProps) {
           px: 3,
           py: 1,
           borderRadius: '8px',
-          boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+          boxShadow: (theme) =>
+            `0 4px 12px ${theme.palette.mode === 'light' ? 'rgba(0,0,0,0.08)' : 'rgba(0,0,0,0.24)'}`,
           '&:hover': {
-            boxShadow: '0 6px 16px rgba(0,0,0,0.15)',
+            boxShadow: (theme) =>
+              `0 6px 16px ${theme.palette.mode === 'light' ? 'rgba(0,0,0,0.12)' : 'rgba(0,0,0,0.28)'}`,
+            backgroundColor: (theme) => theme.palette.primary.dark,
+          },
+          '&:active': {
+            transform: 'scale(0.98)',
           },
         }}
       >

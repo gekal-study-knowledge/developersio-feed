@@ -70,7 +70,7 @@ export default function PostCard({
               }}
             >
               <span>{date}</span>
-              {newsCounter !== undefined && (
+              {newsCounter && (
                 <Typography variant="caption" sx={{ fontWeight: 'bold', color: 'secondary.main' }}>
                   {newsCounter} 件の更新
                 </Typography>

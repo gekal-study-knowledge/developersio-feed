@@ -39,9 +39,14 @@ export default function ThemeSwitcher() {
   }
 
   const getIcon = () => {
-    if (mode === 'light') return <LightModeIcon />;
-    if (mode === 'dark') return <DarkModeIcon />;
-    return <SettingsBrightnessIcon />;
+    switch (mode) {
+      case 'light':
+        return <LightModeIcon />;
+      case 'dark':
+        return <DarkModeIcon />;
+      default:
+        return <SettingsBrightnessIcon />;
+    }
   };
 
   return (

@@ -70,7 +70,7 @@ interface PostData {
 }
 ```
 
-### _posts ディレクトリ構造
+### \_posts ディレクトリ構造
 
 ```
 _posts/
@@ -86,18 +86,17 @@ date: 2026-01-15
 category: XXXXX
 tags: [tag1, tag2]
 ---
-
 # コンテンツ
 ```
 
 ## コンポーネント階層
 
-| レベル | コンポーネント | 役割 |
-|--------|----------------|------|
-| Atom | ThemeSwitcher, NavButton | 基本 UI 要素 |
-| Molecule | PostHeader, PostCard, VisitedIcon | 複数のアトムを結合 |
-| Organism | PostList, Footer, NavigationLinks | ページの一部を形成 |
-| Template | PostLayout | 記事ページの完全なレイアウト |
+| レベル   | コンポーネント                    | 役割                         |
+| -------- | --------------------------------- | ---------------------------- |
+| Atom     | ThemeSwitcher, NavButton          | 基本 UI 要素                 |
+| Molecule | PostHeader, PostCard, VisitedIcon | 複数のアトムを結合           |
+| Organism | PostList, Footer, NavigationLinks | ページの一部を形成           |
+| Template | PostLayout                        | 記事ページの完全なレイアウト |
 
 ## 主要関数
 
