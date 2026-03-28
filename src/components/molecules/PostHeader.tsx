@@ -85,12 +85,13 @@ export default function PostHeader({
           sx={{
             mb: 3,
             borderRadius: '12px',
-            bgcolor: (theme) => theme.palette.mode === 'light' ? 'warning.light' : 'warning.dark',
+            bgcolor: (theme) => (theme.palette.mode === 'light' ? 'warning.light' : 'warning.dark'),
             color: (theme) => theme.palette.warning.main,
           }}
         >
           <AlertTitle>コンテンツが更新されています</AlertTitle>
-          このポストは最後の訪問から <strong>{elapsedTime}</strong> に更新されました。最新のコンテンツをご確認ください。
+          このポストは最後の訪問から <strong>{elapsedTime}</strong>{' '}
+          に更新されました。最新のコンテンツをご確認ください。
         </Alert>
       )}
     </>

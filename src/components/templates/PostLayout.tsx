@@ -98,7 +98,13 @@ export default function PostLayout({
           </Link>
         </Box>
 
-        <PostHeader title={title} date={date} lastUpdated={lastUpdated} isUpdated={isUpdated} elapsedTime={elapsedTime} />
+        <PostHeader
+          title={title}
+          date={date}
+          lastUpdated={lastUpdated}
+          isUpdated={isUpdated}
+          elapsedTime={elapsedTime}
+        />
 
         {/* Decorative Divider */}
         <Box
