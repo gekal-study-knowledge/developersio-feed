@@ -1,71 +1,98 @@
 'use client';
 
 import * as React from 'react';
-import { Box, Typography, Paper } from '@mui/material';
+import { Box, Typography, Paper, Alert, AlertTitle } from '@mui/material';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import UpdateIcon from '@mui/icons-material/Update';
+import WarningIcon from '@mui/icons-material/Warning';
 
 interface PostHeaderProps {
   title: string;
   date: string;
   lastUpdated?: string;
+  isUpdated?: boolean;
+  elapsedTime?: string;
 }
 
-export default function PostHeader({ title, date, lastUpdated }: PostHeaderProps) {
+export default function PostHeader({
+  title,
+  date,
+  lastUpdated,
+  isUpdated,
+  elapsedTime,
+}: PostHeaderProps) {
   return (
-    <Paper
-      elevation={0}
-      sx={{
-        p: { xs: 3, md: 5 },
-        mb: 4,
-        borderRadius: '16px',
-        background: (theme) =>
-          `linear-gradient(135deg, ${theme.palette.primary.dark} 0%, ${theme.palette.primary.main} 100%)`,
-        color: 'common.white',
-        position: 'relative',
-        overflow: 'hidden',
-        '&::after': {
-          content: '""',
-          position: 'absolute',
-          top: -50,
-          right: -50,
-          width: 200,
-          height: 200,
-          background: 'rgba(255, 255, 255, 0.05)',
-          borderRadius: '50%',
-        },
-      }}
-    >
-      <Typography
-        variant="h3"
-        component="h1"
-        gutterBottom
+    <>
+      <Paper
+        elevation={0}
         sx={{
-          fontWeight: 800,
-          fontSize: { xs: '2rem', md: '2.75rem' },
-          lineHeight: 1.2,
-          mb: 3,
+          p: { xs: 3, md: 5 },
+          mb: 4,
+          borderRadius: '16px',
+          background: (theme) =>
+            `linear-gradient(135deg, ${theme.palette.primary.dark} 0%, ${theme.palette.primary.main} 100%)`,
+          color: 'common.white',
+          position: 'relative',
+          overflow: 'hidden',
+          '&::after': {
+            content: '""',
+            position: 'absolute',
+            top: -50,
+            right: -50,
+            width: 200,
+            height: 200,
+            background: 'rgba(255, 255, 255, 0.05)',
+            borderRadius: '50%',
+          },
         }}
       >
-        {title}
-      </Typography>
+        <Typography
+          variant="h3"
+          component="h1"
+          gutterBottom
+          sx={{
+            fontWeight: 800,
+            fontSize: { xs: '2rem', md: '2.75rem' },
+            lineHeight: 1.2,
+            mb: 3,
+          }}
+        >
+          {title}
+        </Typography>
 
-      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 3 }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <CalendarMonthIcon fontSize="small" sx={{ opacity: 0.8 }} />
-          <Typography variant="subtitle1" sx={{ fontWeight: 500, opacity: 0.9 }}>
-            {date}
-          </Typography>
-        </Box>
-        {lastUpdated && (
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 3 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <UpdateIcon fontSize="small" sx={{ opacity: 0.8 }} />
-            <Typography variant="subtitle2" sx={{ fontWeight: 400, opacity: 0.8 }}>
-              最終更新: {lastUpdated}
+            <CalendarMonthIcon fontSize="small" sx={{ opacity: 0.8 }} />
+            <Typography variant="subtitle1" sx={{ fontWeight: 500, opacity: 0.9 }}>
+              {date}
             </Typography>
           </Box>
-        )}
-      </Box>
-    </Paper>
+          {lastUpdated && (
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <UpdateIcon fontSize="small" sx={{ opacity: 0.8 }} />
+              <Typography variant="subtitle2" sx={{ fontWeight: 400, opacity: 0.8 }}>
+                最終更新: {lastUpdated}
+              </Typography>
+            </Box>
+          )}
+        </Box>
+      </Paper>
+
+      {isUpdated && elapsedTime && (
+        <Alert
+          severity="warning"
+          icon={<WarningIcon fontSize="inherit" />}
+          sx={{
+            mb: 3,
+            borderRadius: '12px',
+            bgcolor: (theme) => theme.palette.mode === 'light' ? 'warning.light' : 'warning.dark',
+            color: (theme) => theme.palette.warning.main,
+          }}
+        >
+          <AlertTitle>コンテンツが更新されています</AlertTitle>
+          このポストは最後の訪問から <strong>{elapsedTime}</strong> に更新されました。最新のコンテンツをご確認ください。
+        </Alert>
+      )}
+    </>
   );
 }

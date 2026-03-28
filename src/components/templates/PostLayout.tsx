@@ -44,7 +44,7 @@ export default function PostLayout({
   const [isBottom, setIsBottom] = React.useState(false);
   const [showSticky, setShowSticky] = React.useState(false);
 
-  const { markAsVisited } = useVisitedPost({
+  const { markAsVisited, isUpdated, elapsedTime } = useVisitedPost({
     year,
     month,
     day,
@@ -98,7 +98,7 @@ export default function PostLayout({
           </Link>
         </Box>
 
-        <PostHeader title={title} date={date} lastUpdated={lastUpdated} />
+        <PostHeader title={title} date={date} lastUpdated={lastUpdated} isUpdated={isUpdated} elapsedTime={elapsedTime} />
 
         {/* Decorative Divider */}
         <Box
