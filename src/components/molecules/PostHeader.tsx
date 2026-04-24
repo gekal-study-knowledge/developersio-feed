@@ -1,11 +1,11 @@
 'use client';
 
 import * as React from 'react';
-import { Box, Typography, Paper, Alert, AlertTitle, Button } from '@mui/material';
+import { Box, Typography, Paper } from '@mui/material';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import UpdateIcon from '@mui/icons-material/Update';
 import FiberNewIcon from '@mui/icons-material/FiberNew';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 interface PostHeaderProps {
   title: string;
@@ -91,48 +91,52 @@ export default function PostHeader({
       </Paper>
 
       {newCount > 0 && (
-        <Alert
-          severity="warning"
-          icon={<FiberNewIcon fontSize="inherit" />}
-          action={
-            <Button
-              color="warning"
-              size="small"
-              variant="outlined"
-              endIcon={<ArrowDownwardIcon fontSize="small" />}
-              onClick={() =>
-                document
-                  .getElementById('new-content-divider')
-                  ?.scrollIntoView({ behavior: 'smooth', block: 'center' })
-              }
-              sx={{ whiteSpace: 'nowrap' }}
-            >
-              新着へ
-            </Button>
+        <Box
+          role="button"
+          tabIndex={0}
+          onClick={() =>
+            document
+              .getElementById('new-content-divider')
+              ?.scrollIntoView({ behavior: 'smooth', block: 'center' })
           }
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ')
+              document
+                .getElementById('new-content-divider')
+                ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }}
           sx={{
             mb: 3,
+            px: 2.5,
+            py: 1.5,
             borderRadius: '12px',
+            border: '1.5px solid',
+            borderColor: 'warning.main',
             bgcolor: (theme) =>
-              theme.palette.mode === 'light' ? 'warning.light' : 'rgba(237,108,2,0.2)',
-            color: 'warning.dark',
-            '& .MuiAlert-icon': { color: 'warning.main' },
+              theme.palette.mode === 'light' ? 'warning.light' : 'rgba(237,108,2,0.15)',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 1.5,
+            userSelect: 'none',
+            transition: 'filter 0.15s',
+            '&:hover': { filter: 'brightness(0.95)' },
+            '&:active': { filter: 'brightness(0.88)' },
           }}
         >
-          <AlertTitle sx={{ fontWeight: 700 }}>
-            新しい更新があります（{newCount}件）
-          </AlertTitle>
-          {elapsedTime ? (
-            <>
-              前回の閲覧から <strong>{elapsedTime}</strong> に{' '}
-              <strong>{newCount}件</strong> の新着記事が追加されました。
-            </>
-          ) : (
-            <>
-              前回の閲覧以降に <strong>{newCount}件</strong> の新着記事が追加されました。
-            </>
-          )}
-        </Alert>
+          <FiberNewIcon sx={{ color: 'warning.main', fontSize: '1.4rem', flexShrink: 0 }} />
+          <Box sx={{ flex: 1 }}>
+            <Typography variant="body1" fontWeight={700} color="warning.dark" lineHeight={1.3}>
+              新着 {newCount} 件の記事があります
+            </Typography>
+            {elapsedTime && (
+              <Typography variant="caption" color="text.secondary">
+                {elapsedTime}前に更新
+              </Typography>
+            )}
+          </Box>
+          <KeyboardArrowDownIcon sx={{ color: 'warning.main', flexShrink: 0 }} />
+        </Box>
       )}
     </>
   );
