@@ -1,10 +1,11 @@
 'use client';
 
 import * as React from 'react';
-import { Box, Typography, Paper, Alert, AlertTitle } from '@mui/material';
+import { Box, Typography, Paper, Alert, AlertTitle, Button } from '@mui/material';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import UpdateIcon from '@mui/icons-material/Update';
 import FiberNewIcon from '@mui/icons-material/FiberNew';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 
 interface PostHeaderProps {
   title: string;
@@ -93,6 +94,22 @@ export default function PostHeader({
         <Alert
           severity="warning"
           icon={<FiberNewIcon fontSize="inherit" />}
+          action={
+            <Button
+              color="warning"
+              size="small"
+              variant="outlined"
+              endIcon={<ArrowDownwardIcon fontSize="small" />}
+              onClick={() =>
+                document
+                  .getElementById('new-content-divider')
+                  ?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+              }
+              sx={{ whiteSpace: 'nowrap' }}
+            >
+              新着へ
+            </Button>
+          }
           sx={{
             mb: 3,
             borderRadius: '12px',
@@ -105,13 +122,12 @@ export default function PostHeader({
           <AlertTitle sx={{ fontWeight: 700 }}>
             新しい更新があります（{newCount}件）
           </AlertTitle>
-          {elapsedTime && (
+          {elapsedTime ? (
             <>
               前回の閲覧から <strong>{elapsedTime}</strong> に{' '}
               <strong>{newCount}件</strong> の新着記事が追加されました。
             </>
-          )}
-          {!elapsedTime && (
+          ) : (
             <>
               前回の閲覧以降に <strong>{newCount}件</strong> の新着記事が追加されました。
             </>

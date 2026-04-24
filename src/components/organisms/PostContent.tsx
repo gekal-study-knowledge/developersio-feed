@@ -43,6 +43,7 @@ function WaveUpdateDivider({ elapsedTime }: { elapsedTime?: string }) {
 
   return (
     <Box
+      id="new-content-divider"
       sx={{
         position: 'relative',
         my: 5,
