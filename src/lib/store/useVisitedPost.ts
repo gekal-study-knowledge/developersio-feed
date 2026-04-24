@@ -80,6 +80,7 @@ export const useVisitedPost = ({ year, month, day, slug, newsCounter }: UseVisit
   const [isVisited, setIsVisited] = useState(false);
   const [isUpdated, setIsUpdated] = useState(false);
   const [elapsedTime, setElapsedTime] = useState<string>('');
+  const [savedCounter, setSavedCounter] = useState<number | null>(null);
 
   const currentPostId = `${year}/${month}/${day}/${slug}`;
 
@@ -92,15 +93,19 @@ export const useVisitedPost = ({ year, month, day, slug, newsCounter }: UseVisit
       const isPostUpdated = postData.counter !== newsCounter;
       setIsUpdated(isPostUpdated);
 
-      if (isPostUpdated && postData.timestamp > 0) {
-        const now = Date.now();
-        const diffMs = now - postData.timestamp;
-        setElapsedTime(formatElapsedTime(diffMs));
+      if (isPostUpdated) {
+        setSavedCounter(postData.counter);
+        if (postData.timestamp > 0) {
+          const now = Date.now();
+          const diffMs = now - postData.timestamp;
+          setElapsedTime(formatElapsedTime(diffMs));
+        }
       }
     } else {
       setIsVisited(false);
       setIsUpdated(false);
       setElapsedTime('');
+      setSavedCounter(null);
     }
   }, [currentPostId, newsCounter]);
 
@@ -129,7 +134,7 @@ export const useVisitedPost = ({ year, month, day, slug, newsCounter }: UseVisit
     }
   }, [currentPostId, newsCounter]);
 
-  return { isVisited, isUpdated, elapsedTime, markAsVisited };
+  return { isVisited, isUpdated, elapsedTime, markAsVisited, savedCounter };
 };
 
 const formatElapsedTime = (diffMs: number): string => {

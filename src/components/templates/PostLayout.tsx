@@ -44,7 +44,7 @@ export default function PostLayout({
   const [isBottom, setIsBottom] = React.useState(false);
   const [showSticky, setShowSticky] = React.useState(false);
 
-  const { markAsVisited, isUpdated, elapsedTime } = useVisitedPost({
+  const { markAsVisited, isUpdated, elapsedTime, savedCounter } = useVisitedPost({
     year,
     month,
     day,
@@ -135,7 +135,11 @@ export default function PostLayout({
         </Box>
 
         <Box sx={{ my: 4 }}>
-          <PostContent contentHtml={contentHtml} />
+          <PostContent
+            contentHtml={contentHtml}
+            savedCounter={savedCounter}
+            elapsedTime={elapsedTime}
+          />
           <NavigationLinks previous={previous} next={next} />
         </Box>
       </Container>
