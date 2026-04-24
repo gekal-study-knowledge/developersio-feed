@@ -4,13 +4,14 @@ import * as React from 'react';
 import { Box, Typography, Paper, Alert, AlertTitle } from '@mui/material';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import UpdateIcon from '@mui/icons-material/Update';
-import WarningIcon from '@mui/icons-material/Warning';
+import FiberNewIcon from '@mui/icons-material/FiberNew';
 
 interface PostHeaderProps {
   title: string;
   date: string;
   lastUpdated?: string;
-  isUpdated?: boolean;
+  savedCounter?: number | null;
+  newsCounter?: number;
   elapsedTime?: string;
 }
 
@@ -18,9 +19,19 @@ export default function PostHeader({
   title,
   date,
   lastUpdated,
-  isUpdated,
+  savedCounter,
+  newsCounter,
   elapsedTime,
 }: PostHeaderProps) {
+  const newCount =
+    savedCounter !== null &&
+    savedCounter !== undefined &&
+    savedCounter >= 0 &&
+    newsCounter !== undefined &&
+    newsCounter > savedCounter
+      ? newsCounter - savedCounter
+      : 0;
+
   return (
     <>
       <Paper
@@ -78,20 +89,33 @@ export default function PostHeader({
         </Box>
       </Paper>
 
-      {isUpdated && elapsedTime && (
+      {newCount > 0 && (
         <Alert
           severity="warning"
-          icon={<WarningIcon fontSize="inherit" />}
+          icon={<FiberNewIcon fontSize="inherit" />}
           sx={{
             mb: 3,
             borderRadius: '12px',
-            bgcolor: (theme) => (theme.palette.mode === 'light' ? 'warning.light' : 'warning.dark'),
-            color: (theme) => theme.palette.warning.main,
+            bgcolor: (theme) =>
+              theme.palette.mode === 'light' ? 'warning.light' : 'rgba(237,108,2,0.2)',
+            color: 'warning.dark',
+            '& .MuiAlert-icon': { color: 'warning.main' },
           }}
         >
-          <AlertTitle>コンテンツが更新されています</AlertTitle>
-          このポストは最後の訪問から <strong>{elapsedTime}</strong>{' '}
-          に更新されました。最新のコンテンツをご確認ください。
+          <AlertTitle sx={{ fontWeight: 700 }}>
+            新しい更新があります（{newCount}件）
+          </AlertTitle>
+          {elapsedTime && (
+            <>
+              前回の閲覧から <strong>{elapsedTime}</strong> に{' '}
+              <strong>{newCount}件</strong> の新着記事が追加されました。
+            </>
+          )}
+          {!elapsedTime && (
+            <>
+              前回の閲覧以降に <strong>{newCount}件</strong> の新着記事が追加されました。
+            </>
+          )}
         </Alert>
       )}
     </>

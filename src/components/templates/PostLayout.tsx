@@ -44,7 +44,7 @@ export default function PostLayout({
   const [isBottom, setIsBottom] = React.useState(false);
   const [showSticky, setShowSticky] = React.useState(false);
 
-  const { markAsVisited, isUpdated, elapsedTime, savedCounter } = useVisitedPost({
+  const { markAsVisited, elapsedTime, savedCounter } = useVisitedPost({
     year,
     month,
     day,
@@ -102,7 +102,8 @@ export default function PostLayout({
           title={title}
           date={date}
           lastUpdated={lastUpdated}
-          isUpdated={isUpdated}
+          savedCounter={savedCounter}
+          newsCounter={newsCounter}
           elapsedTime={elapsedTime}
         />
 
