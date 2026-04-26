@@ -100,10 +100,10 @@ npm run dev
 
 ### ワークフロー詳細
 
-| Workflow        | Trigger                     | Role                     |
-| --------------- | --------------------------- | ------------------------ |
-| `fetch_rss.yml` | Schedule (hourly), manual   | RSS 取得・`_posts/` 更新 |
-| `deploy.yml`    | Push to main, workflow_call | ビルド・デプロイ         |
+| Workflow        | Trigger                     | Role                     | Badge |
+| --------------- | --------------------------- | ------------------------ | ----- |
+| `fetch_rss.yml` | Schedule (hourly), manual   | RSS 取得・`_posts/` 更新 | [![Fetch RSS and Update Posts](https://github.com/gekal-study-knowledge/developersio-feed/actions/workflows/fetch_rss.yml/badge.svg)](https://github.com/gekal-study-knowledge/developersio-feed/actions/workflows/fetch_rss.yml) |
+| `deploy.yml`    | Push to main, workflow_call | ビルド・デプロイ         | [![Build and Deploy](https://github.com/gekal-study-knowledge/developersio-feed/actions/workflows/deploy.yml/badge.svg)](https://github.com/gekal-study-knowledge/developersio-feed/actions/workflows/deploy.yml) |
 
 ## 主要機能
 
