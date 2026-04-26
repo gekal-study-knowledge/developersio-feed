@@ -25,6 +25,8 @@ Next.js (App Router) と Material UI (MUI) v7 を使用してモダンに構築�
 | **Deployment**      | GitHub Pages (via GitHub Actions)  |
 | **Package Manager** | npm                                |
 
+- [![Build and Deploy](https://github.com/gekal-study-knowledge/developersio-feed/actions/workflows/deploy.yml/badge.svg)](https://github.com/gekal-study-knowledge/developersio-feed/actions/workflows/deploy.yml)
+
 ## 開発ガイド
 
 ### ローカル開発環境の構築
