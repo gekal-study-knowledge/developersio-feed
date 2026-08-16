@@ -118,11 +118,25 @@ export const useVisitedPost = ({ year, month, day, slug, newsCounter }: UseVisit
   const [isUpdated, setIsUpdated] = useState(false);
   const [elapsedTime, setElapsedTime] = useState<string>('');
   const [savedCounter, setSavedCounter] = useState<number | null>(null);
+  // 記事単位バッジ用：先頭から何件目までが前回訪問時点で既に表示されていたか。
+  // null は「前回訪問記録なし＝バッジ非表示」を表す（savedCounter とは異なり、
+  // 更新が無かった場合も newsCounter を返し「全件確認済み」を表現する）。
+  const [confirmedThroughCount, setConfirmedThroughCount] = useState<number | null>(null);
 
   const currentPostId = `${year}/${month}/${day}/${slug}`;
 
   useEffect(() => {
+    // この postId に対する同期は初回のみ行う。markAsVisited() が localStorage を
+    // 書き換えた際に発火する VISITED_UPDATED_EVENT で sync が再実行されると、
+    // 「前回訪問時点のスナップショット」が「たった今書き込んだ最新値」で
+    // 上書きされてしまい、更新diff表示（savedCounter/elapsedTime/confirmedThroughCount）
+    // が一度も画面に出ないまま消えてしまう不具合があったため。
+    let hasSynced = false;
+
     const sync = () => {
+      if (hasSynced) return;
+      hasSynced = true;
+
       const visitedPosts = getVisitedPosts();
       const postData = visitedPosts[currentPostId];
 
@@ -133,6 +147,7 @@ export const useVisitedPost = ({ year, month, day, slug, newsCounter }: UseVisit
 
         if (isPostUpdated) {
           setSavedCounter(postData.counter);
+          setConfirmedThroughCount(postData.counter);
           if (postData.timestamp > 0) {
             const now = Date.now();
             const diffMs = now - postData.timestamp;
@@ -140,6 +155,7 @@ export const useVisitedPost = ({ year, month, day, slug, newsCounter }: UseVisit
           }
         } else {
           setSavedCounter(null);
+          setConfirmedThroughCount(newsCounter);
           setElapsedTime('');
         }
       } else {
@@ -147,6 +163,7 @@ export const useVisitedPost = ({ year, month, day, slug, newsCounter }: UseVisit
         setIsUpdated(false);
         setElapsedTime('');
         setSavedCounter(null);
+        setConfirmedThroughCount(null);
       }
     };
 
@@ -156,6 +173,9 @@ export const useVisitedPost = ({ year, month, day, slug, newsCounter }: UseVisit
     return () => window.removeEventListener(VISITED_UPDATED_EVENT, sync);
   }, [currentPostId, newsCounter]);
 
+  // 今回の訪問を記録する。表示用の状態（isVisited/isUpdated/elapsedTime/savedCounter/
+  // confirmedThroughCount）は sync() が初回に計算した「前回訪問時点」のスナップショットを
+  // 表示し続けるため、ここでは localStorage への書き込みのみを行い、React state には触れない。
   const markAsVisited = useCallback(() => {
     const visitedPosts = getVisitedPosts();
     const postData = visitedPosts[currentPostId];
@@ -163,15 +183,10 @@ export const useVisitedPost = ({ year, month, day, slug, newsCounter }: UseVisit
     if (postData === undefined || postData.counter !== newsCounter) {
       visitedPosts[currentPostId] = { counter: newsCounter, timestamp: Date.now() };
       saveVisitedPosts(visitedPosts);
-
-      setIsVisited(true);
-      setIsUpdated(false);
-      setElapsedTime('');
-      setSavedCounter(null);
     }
   }, [currentPostId, newsCounter]);
 
-  return { isVisited, isUpdated, elapsedTime, markAsVisited, savedCounter };
+  return { isVisited, isUpdated, elapsedTime, markAsVisited, savedCounter, confirmedThroughCount };
 };
 
 const formatElapsedTime = (diffMs: number): string => {
