@@ -126,7 +126,10 @@ export default function PostHeader({
         >
           <FiberNewIcon sx={{ color: 'warning.main', fontSize: '1.4rem', flexShrink: 0 }} />
           <Box sx={{ flex: 1 }}>
-            <Typography variant="body1" fontWeight={700} color="warning.dark" lineHeight={1.3}>
+            <Typography
+              variant="body1"
+              sx={{ fontWeight: 700, color: 'warning.dark', lineHeight: 1.3 }}
+            >
               新着 {newCount} 件の記事があります
             </Typography>
             {elapsedTime && (

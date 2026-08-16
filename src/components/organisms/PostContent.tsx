@@ -10,17 +10,13 @@ interface PostContentProps {
   elapsedTime?: string;
 }
 
-function splitHtmlAtNthH2(
-  html: string,
-  n: number,
-): { before: string; after: string } | null {
+function splitHtmlAtNthH2(html: string, n: number): { before: string; after: string } | null {
   if (n <= 0) return null;
 
   const regex = /<h2[^>]*>/gi;
   let count = 0;
-  let match: RegExpExecArray | null;
 
-  while ((match = regex.exec(html)) !== null) {
+  while (regex.exec(html) !== null) {
     count++;
     if (count === n) {
       // Find the (n+1)-th h2 — everything before it is "read", after is "new"
@@ -91,11 +87,7 @@ function WaveUpdateDivider({ elapsedTime }: { elapsedTime?: string }) {
             color: 'warning.main',
           }}
         />
-        <Typography
-          variant="body2"
-          fontWeight="bold"
-          sx={{ color: 'warning.dark' }}
-        >
+        <Typography variant="body2" sx={{ fontWeight: 'bold', color: 'warning.dark' }}>
           ここから新着記事
           {elapsedTime ? `（${elapsedTime}前に更新）` : ''}
         </Typography>
@@ -151,8 +143,7 @@ const contentSx = {
     color: 'primary.main',
     fontSize: { xs: '1.5rem', md: '1.875rem' },
     fontWeight: 700,
-    borderBottom: (theme: { palette: { divider: string } }) =>
-      `2px solid ${theme.palette.divider}`,
+    borderBottom: (theme: { palette: { divider: string } }) => `2px solid ${theme.palette.divider}`,
     pb: 1,
     display: 'flex',
     alignItems: 'center',
